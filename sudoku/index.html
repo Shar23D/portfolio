@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+        <title>Sudoku</title>
+        <link rel="stylesheet" href="static/style.css">
+    </head>
+
+    <body>
+        <main>
+            <h1>Let's play Sudoku</h1>
+
+            <!-- Game Statistics -->
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-label">Time</div>
+                    <div class="stat-value" id="timer">00:00</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Level</div>
+                    <div class="stat-value" id="level">Medium</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-label">Hints Used</div>
+                    <div class="stat-value" id="hintsUsed">0</div>
+                </div>
+            </div>
+
+            <!-- Game board -->
+            <div id="board"></div>
+            <div class="number-input">
+                <button class="number-btn" onclick="setSelectedNumber(1)">1</button>
+                <button class="number-btn" onclick="setSelectedNumber(2)">2</button>
+                <button class="number-btn" onclick="setSelectedNumber(3)">3</button>
+                <button class="number-btn" onclick="setSelectedNumber(4)">4</button>
+                <button class="number-btn" onclick="setSelectedNumber(5)">5</button>
+                <button class="number-btn" onclick="setSelectedNumber(6)">6</button>
+                <button class="number-btn" onclick="setSelectedNumber(7)">7</button>
+                <button class="number-btn" onclick="setSelectedNumber(8)">8</button>
+                <button class="number-btn" onclick="setSelectedNumber(9)">9</button>
+                <button class="number-btn" onclick="setSelectedNumber(0)">✗</button>
+            </div>
+            <div class="menu">
+                <button class="button" onclick="resetGame()">Reset</button>
+                <button class="button" onclick="showLevelPopup()">New Game</button>
+                <button class="button" onclick="getHint()">Hint</button>
+                <button class="button" onclick="checkSolution()">Check</button>
+            </div>
+            <div class="status" id="status"></div>
+
+            <footer> Sharon Dang 2025</footer>
+        </main>
+
+        <!-- Level Selection Popup -->
+        <div id="levelPopup" class="popup-overlay" style="display: none;">
+            <div class="popup">
+                <button class="close-btn" onclick="hideLevelPopup()" title="Close">×</button>
+                <h2>Choose Level</h2>
+                <div class="level-buttons">
+                    <button class="level-btn easy" onclick="generateGame('easy')">
+                        <strong>Easy</strong><br>
+                    </button>
+                    <button class="level-btn medium" onclick="generateGame('medium')">
+                        <strong>Medium</strong><br>
+                    </button>
+                    <button class="level-btn hard" onclick="generateGame('hard')">
+                        <strong>Hard</strong><br>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <script src="static/script.js"></script>
+    </body>
+
+</html>
