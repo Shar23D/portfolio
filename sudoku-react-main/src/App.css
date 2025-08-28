@@ -21,7 +21,7 @@
 .container {
   border-radius: 8px;
   padding: 16px;
-  background: var(--main-color);
+  background-color: var(--main-color);
 }
 
 .table {
@@ -54,10 +54,12 @@
 }
 
 input {
-  width: 50px;
-  height: 50px;
+  width: 12vw;
+  height: 12vw;
+  max-width: 50px;
+  max-height: 50px;
+  font-size: min(5vw, 24px);
   text-align: center;
-  font-size: 24px;
   border: none;
   outline: none;
   background: inherit;
@@ -78,25 +80,25 @@ input:focus {
 }
 
 input.prefilled:focus {
-  background-color: var(--main-color);
+  background-color: var(--dark-hightlight);
 }
 
 .same-row,
 .same-col,
 .same-box {
-  background: var(--main-color);
+  background-color: var(--main-color);
 }
 
 .same-value {
-  background: var(--dark-hightlight);
+  background-color: var(--dark-hightlight);
 }
 
 .violation {
   background-color: var(--violation-color) !important;
 }
 
-.violation input {
-  background-color: var(--violation-color) !important;
+.violation input.prefilled {
+  opacity: 0.5;
 }
 
 .status {
@@ -124,7 +126,7 @@ input.prefilled:focus {
 }
 
 .modal {
-  background: white;
+  background-color: white;
   padding: 2rem;
   border-radius: 10px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
@@ -202,13 +204,15 @@ input.prefilled:focus {
 
 .cell-wrapper {
   position: relative;
-  width: 50px;
-  height: 50px;
+  width: 12vw;
+  height: 12vw;
+  max-width: 50px;
+  max-height: 50px;
 }
 
 .notes-container {
   position: absolute;
-  z-index: 1;
+  z-index: 3;
   top: 0;
   left: 0;
   width: 100%;
@@ -227,4 +231,56 @@ input.prefilled:focus {
   height: 100%;
   position: relative;
   z-index: 2;
+}
+
+input,
+.difficulty-btn,
+.cancel-btn {
+  min-height: 44px;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 12px;
+  }
+
+  .modal {
+    padding: 1rem;
+    min-width: 80%;
+  }
+
+  .difficulty-btn {
+    padding: 10px 14px;
+    font-size: 14px;
+  }
+
+  .cancel-btn {
+    padding: 6px 12px;
+    font-size: 14px;
+  }
+
+  input {
+    font-size: 5vw;
+  }
+
+  .notes-container {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 480px) {
+  input {
+    width: 14vw;
+    height: 14vw;
+    font-size: 6vw;
+  }
+
+  .cell-wrapper {
+    width: 14vw;
+    height: 14vw;
+  }
+
+  .notes-container {
+    font-size: 7px;
+  }
 }

@@ -32,7 +32,7 @@ function App() {
   const [correctCount, setCorrectCount] = useState(0);
   const [violations, setViolations] = useState([]);
   const [showDifficultyModal, setShowDifficultyModal] = useState(false);
-  const [currentDifficulty, setCurrentDifficulty] = useState("easy");
+  const [currentDifficulty, setCurrentDifficulty] = useState("medium");
   const [isNoteMode, setIsNoteMode] = useState(false);
   const [notes, setNotes] = useState(
     Array(9)
