@@ -1,11 +1,17 @@
 import classNames from "classnames";
+
 const Grid = ({
   board,
   handleInput,
   puzzle,
   selected,
   setSelected,
-  greenCount,
+  correctCount,
+  violations,
+  handleKeyDown,
+  notes,
+  isNoteMode,
+  selectedValue,
 }) => {
   return (
     <div className="container">
@@ -17,6 +23,10 @@ const Grid = ({
                 {row.map((cell, cIdx) => {
                   const isPrefilled = puzzle[rIdx][cIdx] !== null;
                   const cellIndex = rIdx * 9 + cIdx;
+                  const hasViolation = violations.some(
+                    ([r, c]) => r === rIdx && c === cIdx
+                  );
+                  const cellNotes = notes[rIdx][cIdx];
 
                   return (
                     <td
@@ -29,24 +39,51 @@ const Grid = ({
                           Math.floor(rIdx / 3) ===
                             Math.floor(selected[0] / 3) &&
                           Math.floor(cIdx / 3) === Math.floor(selected[1] / 3),
-                        green: cellIndex < greenCount,
+                        correct: cellIndex < correctCount,
+                        violation: hasViolation,
+                        "same-value":
+                          selectedValue !== null && cell === selectedValue,
                       })}
                     >
-                      <input
-                        type="text"
-                        maxLength={1}
-                        value={cell === null ? "" : cell}
-                        readOnly={isPrefilled}
-                        onFocus={() => {
-                          setSelected([rIdx, cIdx]);
-                        }}
-                        onClick={() => {
-                          setSelected([rIdx, cIdx]);
-                        }}
-                        onChange={(e) => {
-                          handleInput(rIdx, cIdx, e.target.value);
-                        }}
-                      />
+                      <div className="cell-wrapper">
+                        {cell === null && cellNotes.size > 0 && (
+                          <div className="notes-container">
+                            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
+                              <span
+                                key={num}
+                                className={`note ${
+                                  cellNotes.has(num) ? "active" : ""
+                                }`}
+                              >
+                                {cellNotes.has(num) ? num : ""}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                        <input
+                          type="text"
+                          maxLength={1}
+                          value={cell === null ? "" : cell}
+                          readOnly={isPrefilled}
+                          className={isPrefilled ? "prefilled" : ""}
+                          data-row={rIdx}
+                          data-col={cIdx}
+                          onFocus={() => {
+                            setSelected([rIdx, cIdx]);
+                          }}
+                          onClick={() => {
+                            setSelected([rIdx, cIdx]);
+                          }}
+                          onChange={(e) => {
+                            if (!isPrefilled) {
+                              handleInput(rIdx, cIdx, e.target.value);
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            handleKeyDown(e, rIdx, cIdx);
+                          }}
+                        />
+                      </div>
                     </td>
                   );
                 })}
@@ -58,4 +95,5 @@ const Grid = ({
     </div>
   );
 };
+
 export default Grid;
