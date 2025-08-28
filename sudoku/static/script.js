@@ -23,6 +23,17 @@ let startTime = null;
 let timerInterval = null;
 let hintsUsed = 0;
 
+const knightMoves = [
+  [-2, -1],
+  [-2, 1],
+  [-1, -2],
+  [-1, 2],
+  [1, -2],
+  [1, 2],
+  [2, -1],
+  [2, 1],
+];
+
 // Create 9x9 grid in HTML
 function createBoard() {
   const boardElement = document.getElementById("board");
@@ -178,6 +189,15 @@ function isValidMove(row, col, num) {
   for (let i = boxRow; i < boxRow + 3; i++) {
     for (let j = boxCol; j < boxCol + 3; j++) {
       if ((i !== row || j !== col) && board[i][j] === num) return false;
+    }
+  }
+
+  // Check anti-knight constraint
+  for (let [dr, dc] of knightMoves) {
+    const newRow = row + dr;
+    const newCol = col + dc;
+    if (newRow >= 0 && newRow < 9 && newCol >= 0 && newCol < 9) {
+      if (board[newRow][newCol] === num) return false; // Can't place the number in cells reachable by knight's move
     }
   }
 
@@ -393,46 +413,55 @@ function shuffleArray(array) {
 }
 
 function getHint() {
-  checkForErrors();
-  // Find error cells first
+  checkForErrors(); // Check for any errors already present on the board
+
+  // Find error cells that violate Sudoku rules
   const errorCellElements = document.querySelectorAll(".cell.error");
   const errorCells = [];
 
   errorCellElements.forEach((cell, index) => {
-    // cell.dataset.index: data attribute set in createBoard() to get the cell's index
     const cellIndex = parseInt(cell.dataset.index);
     const row = Math.floor(cellIndex / 9);
     const col = cellIndex % 9;
-    // Only include non-given numbers
+
+    // Only include non-given (editable) cells
     if (initialBoard[row][col] === 0) {
       errorCells.push([row, col]);
     }
   });
 
   if (errorCells.length > 0) {
+    // If there are error cells, try to correct one of them
     const randomIndex = Math.floor(Math.random() * errorCells.length);
     const [row, col] = errorCells[randomIndex];
 
-    board[row][col] = solution[row][col];
-    hintsUsed++;
-    let index = row * 9 + col;
-    const cells = document.querySelectorAll(".cell");
-    cells[index].classList.add("hinted");
-    updateHintsDisplay();
-    updateDisplay();
-    document.getElementById("status").textContent =
-      "Error corrected with hint!";
+    // Check if placing a hint here violates the knight's move rule
+    if (isValidMove(row, col, solution[row][col])) {
+      // Place the hint
+      board[row][col] = solution[row][col];
+      hintsUsed++;
 
-    if (isBoardComplete() && isValidSolution()) {
-      stopTimer();
+      const index = row * 9 + col;
+      const cells = document.querySelectorAll(".cell");
+      cells[index].classList.add("hinted");
+
+      updateHintsDisplay();
+      updateDisplay();
       document.getElementById("status").textContent =
-        "Congratulations! You solved it!";
-      document.getElementById("status").classList.add("win");
+        "Error corrected with hint!";
+
+      // If the board is complete and valid, show the win message
+      if (isBoardComplete() && isValidSolution()) {
+        stopTimer();
+        document.getElementById("status").textContent =
+          "Congratulations! You solved it!";
+        document.getElementById("status").classList.add("win");
+      }
     }
     return;
   }
 
-  // Find all empty cells that player can fill
+  // If there are no error cells, check for empty cells that can be filled
   const emptyCells = [];
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
@@ -442,32 +471,38 @@ function getHint() {
     }
   }
 
-  // If there are empty cells, fill one randomly
+  // If there are empty cells, fill one randomly, but check for knight's move constraint
   if (emptyCells.length > 0) {
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
     const [row, col] = emptyCells[randomIndex];
 
-    board[row][col] = solution[row][col];
-    hintsUsed++;
-    let index = row * 9 + col;
-    const cells = document.querySelectorAll(".cell");
-    cells[index].classList.add("hinted");
-    updateHintsDisplay();
-    updateDisplay();
-    document.getElementById("status").textContent = "Hint used!";
+    // Check if placing a hint here violates the knight's move rule
+    if (isValidMove(row, col, solution[row][col])) {
+      // Place the hint
+      board[row][col] = solution[row][col];
+      hintsUsed++;
 
-    if (isBoardComplete() && isValidSolution()) {
-      stopTimer();
-      document.getElementById("status").textContent =
-        "Congratulations! You solved it!";
-      document.getElementById("status").classList.add("win");
+      const index = row * 9 + col;
+      const cells = document.querySelectorAll(".cell");
+      cells[index].classList.add("hinted");
+
+      updateHintsDisplay();
+      updateDisplay();
+      document.getElementById("status").textContent = "Hint used!";
+
+      // If the board is complete and valid, show the win message
+      if (isBoardComplete() && isValidSolution()) {
+        stopTimer();
+        document.getElementById("status").textContent =
+          "Congratulations! You solved it!";
+        document.getElementById("status").classList.add("win");
+      }
     }
     return;
   }
-  if (errorCells.length === 0) {
-    document.getElementById("status").textContent =
-      "No hints needed - puzzle is correct!";
-  }
+
+  // If no valid hint could be placed, display a message
+  document.getElementById("status").textContent = "No valid hint available!";
 }
 
 function checkSolution() {
