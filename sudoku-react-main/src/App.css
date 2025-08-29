@@ -107,6 +107,104 @@ input.prefilled:focus {
   background-color: var(--medium-accent);
 }
 
+/* Enhanced Status Banner Styles */
+.status {
+  margin: 20px auto;
+  padding: 15px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  max-width: 500px;
+  transition: all 0.3s ease;
+  transform: translateY(0);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: statusSlideIn 0.3s ease-out;
+}
+
+@keyframes statusSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.status-success {
+  background: linear-gradient(135deg, #4caf50, #45a049);
+  color: white;
+  border: 2px solid #4caf50;
+  animation: statusSlideIn 0.3s ease-out, pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.02);
+  }
+}
+
+.status-error {
+  background: linear-gradient(135deg, #f44336, #d32f2f);
+  color: white;
+  border: 2px solid #f44336;
+  animation: statusSlideIn 0.3s ease-out, shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    transform: translateX(-5px);
+  }
+  20%,
+  40%,
+  60%,
+  80% {
+    transform: translateX(5px);
+  }
+}
+
+.status-hint {
+  background: linear-gradient(135deg, #ff9800, #f57c00);
+  color: white;
+  border: 2px solid #ff9800;
+  animation: statusSlideIn 0.3s ease-out,
+    glow 1.5s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+  from {
+    box-shadow: 0 4px 12px rgba(255, 152, 0, 0.4);
+  }
+  to {
+    box-shadow: 0 6px 20px rgba(255, 152, 0, 0.7);
+  }
+}
+
+.status-info {
+  background: linear-gradient(135deg, #2196f3, #1976d2);
+  color: white;
+  border: 2px solid #2196f3;
+}
+
+.status-default {
+  background: linear-gradient(135deg, #9e9e9e, #757575);
+  color: white;
+  border: 2px solid #9e9e9e;
+}
+
 .correct {
   background-color: var(--hightlight);
   transition: background-color 0.3s ease;
@@ -266,6 +364,11 @@ input,
   .notes-container {
     font-size: 8px;
   }
+
+   .status {
+    margin: 15px 10px;
+    padding: 12px 20px;
+    font-size: 14px;
 }
 
 @media (max-width: 480px) {

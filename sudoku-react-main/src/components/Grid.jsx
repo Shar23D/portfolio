@@ -12,6 +12,7 @@ const Grid = ({
   notes,
   isNoteMode,
   selectedValue,
+  highlightedNumber,
 }) => {
   return (
     <div className="container">
@@ -42,7 +43,9 @@ const Grid = ({
                         correct: cellIndex < correctCount,
                         violation: hasViolation,
                         "same-value":
-                          selectedValue !== null && cell === selectedValue,
+                          (selectedValue !== null && cell === selectedValue) ||
+                          (highlightedNumber !== null &&
+                            cell === highlightedNumber),
                       })}
                     >
                       <div className="cell-wrapper">

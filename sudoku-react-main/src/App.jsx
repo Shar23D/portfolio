@@ -27,6 +27,7 @@ function App() {
   );
 
   const [status, setStatus] = useState(null);
+  const [statusType, setStatusType] = useState(null);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(null);
   const [correctCount, setCorrectCount] = useState(0);
@@ -40,6 +41,7 @@ function App() {
       .map(() => Array(9).fill(() => new Set()))
       .map((row) => row.map((cell) => cell()))
   );
+  const [highlightedNumber, setHighlightedNumber] = useState(null);
 
   useEffect(() => {
     fetchPuzzle({
@@ -58,12 +60,52 @@ function App() {
     setViolations(findViolations(board));
   }, [board]);
 
+  // Add global keyboard listener for number highlighting and global shortcuts
+  useEffect(() => {
+    const handleGlobalKeyDown = (e) => {
+      // Only handle when no input is focused
+      if (!e.target.matches("input")) {
+        // Handle number keys (1-9) for highlighting
+        if (e.key >= "1" && e.key <= "9") {
+          e.preventDefault();
+          highlightSameValue(parseInt(e.key));
+          setSelected(null); // Clear selection when highlighting globally
+        }
+        // Handle 'H' key for hints
+        else if (e.key.toLowerCase() === "h") {
+          e.preventDefault();
+          handleHint();
+        }
+        // Handle 'N' key for note mode toggle
+        else if (e.key.toLowerCase() === "n") {
+          e.preventDefault();
+          setIsNoteMode(!isNoteMode);
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleGlobalKeyDown);
+    return () => document.removeEventListener("keydown", handleGlobalKeyDown);
+  }, [isNoteMode]); // Add isNoteMode as dependency so the toggle works correctly
+
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      // If the click is outside the puzzle area
+      if (!e.target.closest(".puzzle-container")) {
+        clearHighlights(); // Clear the highlights
+      }
+    };
+
+    document.addEventListener("click", handleClickOutside);
+    return () => document.removeEventListener("click", handleClickOutside);
+  }, []);
   const handleCheck = () => {
     const flatBoard = board.flat();
     const flatSolution = solution.flat();
 
     if (flatBoard.every((cell, i) => cell === flatSolution[i])) {
-      setStatus("Correct!");
+      setStatus("🎉 Congratulations! Puzzle solved! 🎉");
+      setStatusType("success");
 
       let count = 0;
       const totalCells = 81;
@@ -73,15 +115,32 @@ function App() {
         if (count === totalCells) clearInterval(interval);
       }, 30);
     } else {
-      setStatus("Incorrect, try again.");
+      setStatus("❌ Not quite right. Keep trying!");
+      setStatusType("error");
+      // Clear error message after 3 seconds
+      setTimeout(() => {
+        if (statusType === "error") {
+          setStatus("");
+          setStatusType(null);
+        }
+      }, 3000);
     }
   };
 
   const handleReset = () => {
     setBoard(puzzle.map((row) => [...row]));
-    setStatus("");
+    setStatus("🔄 Puzzle reset to original state");
+    setStatusType("info");
     setSelected(null);
     setCorrectCount(0);
+    clearHighlights();
+    // Clear info message after 2 seconds
+    setTimeout(() => {
+      if (statusType === "info") {
+        setStatus("");
+        setStatusType(null);
+      }
+    }, 2000);
     // Clear all notes
     setNotes(
       Array(9)
@@ -96,12 +155,15 @@ function App() {
 
   const handleNewPuzzle = () => {
     setShowDifficultyModal(true);
+    clearHighlights();
   };
 
   const handleDifficultySelect = (difficulty) => {
     setCurrentDifficulty(difficulty);
     setCorrectCount(0);
     setShowDifficultyModal(false);
+    setStatus("🆕 Loading new puzzle...");
+    setStatusType("info");
 
     // Clear notes when getting new puzzle
     setNotes(
@@ -161,7 +223,15 @@ function App() {
       });
 
       setSelected([r, c]);
-      setStatus("Fixed one incorrect cell.");
+      setStatus(`💡 Fixed incorrect cell at row ${r + 1}, column ${c + 1}`);
+      setStatusType("hint");
+      // Clear hint message after 3 seconds
+      setTimeout(() => {
+        if (statusType === "hint") {
+          setStatus("");
+          setStatusType(null);
+        }
+      }, 3000);
       return;
     }
 
@@ -176,7 +246,16 @@ function App() {
     }
 
     if (emptyCells.length === 0) {
-      setStatus("No incorrect or empty cells left for a hint!");
+      setStatus("✅ No empty or incorrect cells left!");
+      setStatusType("info");
+
+      // Clear info message after 2 seconds
+      setTimeout(() => {
+        if (statusType === "info") {
+          setStatus("");
+          setStatusType(null);
+        }
+      }, 2000);
       return;
     }
 
@@ -198,7 +277,16 @@ function App() {
     });
 
     setSelected([r, c]);
-    setStatus("Hint applied to an empty cell.");
+    setStatus(`💡 Added hint at row ${r + 1}, column ${c + 1}`);
+    setStatusType("hint");
+
+    // Clear hint message after 3 seconds
+    setTimeout(() => {
+      if (statusType === "hint") {
+        setStatus("");
+        setStatusType(null);
+      }
+    }, 3000);
   };
 
   const handleInput = (rIdx, cIdx, value) => {
@@ -248,13 +336,29 @@ function App() {
     }
   };
 
+  // Handle highlight cells with same value
+  const highlightSameValue = (num) => {
+    setHighlightedNumber(num);
+  };
+  // Function to clear highlights
+  const clearHighlights = () => {
+    setHighlightedNumber(null);
+  };
+
   // Handle keyboard input for number replacement and navigation
   const handleKeyDown = (e, rIdx, cIdx) => {
     const isPrefilled = puzzle[rIdx][cIdx] !== null;
 
     // Don't allow input if cell is prefilled
-    if (isPrefilled && e.key >= "1" && e.key <= "9") {
+    if ((isPrefilled || selected === null) && e.key >= "1" && e.key <= "9") {
+      // Blur the prefilled cell to remove focus
+      const cell = document.querySelector(
+        `input[data-row="${rIdx}"][data-col="${cIdx}"]`
+      );
+      if (cell) cell.blur();
       e.preventDefault();
+      highlightSameValue(parseInt(e.key));
+      setSelected(null);
       return;
     }
 
@@ -317,6 +421,12 @@ function App() {
         handleInput(rIdx, cIdx, "");
       }
     }
+    // Get hint with 'H' key
+    else if (key.toLowerCase() === "h") {
+      e.preventDefault();
+      handleHint();
+    }
+
     // Toggle note mode with 'N' key
     else if (key.toLowerCase() === "n") {
       e.preventDefault();
@@ -354,9 +464,14 @@ function App() {
         notes={notes}
         isNoteMode={isNoteMode}
         selectedValue={selected ? board[selected[0]][selected[1]] : null}
+        highlightedNumber={highlightedNumber}
       />
 
-      {status && <div className="status">{status}</div>}
+      {status && (
+        <div className={`status status-${statusType || "default"}`}>
+          {status}
+        </div>
+      )}
 
       <Controls
         handleCheck={handleCheck}
