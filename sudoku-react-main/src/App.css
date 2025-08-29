@@ -97,10 +97,6 @@ input.prefilled:focus {
   background-color: var(--violation-color) !important;
 }
 
-.violation input.prefilled {
-  opacity: 0.5;
-}
-
 .status {
   font-weight: bold;
   margin-top: 20px;
@@ -281,6 +277,7 @@ input.prefilled:focus {
   border: 1px solid #ccc;
   border-radius: 5px;
   cursor: pointer;
+  color: var(--text);
 }
 
 .cancel-btn:hover {

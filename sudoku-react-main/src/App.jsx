@@ -60,7 +60,7 @@ function App() {
     setViolations(findViolations(board));
   }, [board]);
 
-  // Add global keyboard listener for number highlighting and global shortcuts
+  // Add global keyboard listener for number highlighting
   useEffect(() => {
     const handleGlobalKeyDown = (e) => {
       // Only handle when no input is focused
@@ -70,16 +70,6 @@ function App() {
           e.preventDefault();
           highlightSameValue(parseInt(e.key));
           setSelected(null); // Clear selection when highlighting globally
-        }
-        // Handle 'H' key for hints
-        else if (e.key.toLowerCase() === "h") {
-          e.preventDefault();
-          handleHint();
-        }
-        // Handle 'N' key for note mode toggle
-        else if (e.key.toLowerCase() === "n") {
-          e.preventDefault();
-          setIsNoteMode(!isNoteMode);
         }
       }
     };
@@ -467,12 +457,6 @@ function App() {
         highlightedNumber={highlightedNumber}
       />
 
-      {status && (
-        <div className={`status status-${statusType || "default"}`}>
-          {status}
-        </div>
-      )}
-
       <Controls
         handleCheck={handleCheck}
         handleReset={handleReset}
@@ -481,6 +465,12 @@ function App() {
         setIsNoteMode={setIsNoteMode}
         handleHint={handleHint}
       />
+
+      {status && (
+        <div className={`status status-${statusType || "default"}`}>
+          {status}
+        </div>
+      )}
 
       <DifficultyModal
         isOpen={showDifficultyModal}
