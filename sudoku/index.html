@@ -32,28 +32,30 @@
       </div>
 
       <!-- Game board -->
-      <div id="board"></div>
-      <div class="number-input">
-        <button class="number-btn" onclick="setSelectedNumber(1)">1</button>
-        <button class="number-btn" onclick="setSelectedNumber(2)">2</button>
-        <button class="number-btn" onclick="setSelectedNumber(3)">3</button>
-        <button class="number-btn" onclick="setSelectedNumber(4)">4</button>
-        <button class="number-btn" onclick="setSelectedNumber(5)">5</button>
-        <button class="number-btn" onclick="setSelectedNumber(6)">6</button>
-        <button class="number-btn" onclick="setSelectedNumber(7)">7</button>
-        <button class="number-btn" onclick="setSelectedNumber(8)">8</button>
-        <button class="number-btn" onclick="setSelectedNumber(9)">9</button>
-        <button class="number-btn" onclick="setSelectedNumber(0)">✗</button>
-      </div>
-      <div class="menu">
-        <button class="button" onclick="resetGame()">Reset</button>
-        <button class="button" onclick="showLevelPopup()">New Game</button>
-        <button class="button" onclick="getHint()">Hint</button>
-        <button class="button" onclick="checkSolution()">Check</button>
-      </div>
-      <div class="status" id="status"></div>
+      <div id="game-area">
+        <div id="board"></div>
+        <div class="number-input">
+          <button class="number-btn" onclick="setSelectedNumber(1)">1</button>
+          <button class="number-btn" onclick="setSelectedNumber(2)">2</button>
+          <button class="number-btn" onclick="setSelectedNumber(3)">3</button>
+          <button class="number-btn" onclick="setSelectedNumber(4)">4</button>
+          <button class="number-btn" onclick="setSelectedNumber(5)">5</button>
+          <button class="number-btn" onclick="setSelectedNumber(6)">6</button>
+          <button class="number-btn" onclick="setSelectedNumber(7)">7</button>
+          <button class="number-btn" onclick="setSelectedNumber(8)">8</button>
+          <button class="number-btn" onclick="setSelectedNumber(9)">9</button>
+          <button class="number-btn" onclick="setSelectedNumber(0)">✗</button>
+        </div>
+        <div class="menu">
+          <button class="button" onclick="resetGame()">Reset</button>
+          <button class="button" onclick="showLevelPopup()">New Game</button>
+          <button class="button" onclick="getHint()">Hint</button>
+          <button class="button" onclick="checkSolution()">Check</button>
+        </div>
+        <div class="status" id="status"></div>
 
-      <footer>Sharon Dang 2025</footer>
+        <footer>Sharon Dang 2025</footer>
+      </div>
     </main>
 
     <!-- Level Selection Popup -->

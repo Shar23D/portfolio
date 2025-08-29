@@ -122,6 +122,13 @@ function setSelectedNumber(num) {
   }
 }
 
+function clearSelected() {
+  document.querySelectorAll(".cell").forEach((cell) => {
+    cell.classList.remove("selected", "highlight");
+  });
+  selectedCell = null;
+}
+
 function updateDisplay() {
   const cells = document.querySelectorAll(".cell");
 
@@ -232,7 +239,7 @@ function resetGame() {
   document.getElementById("status").classList.remove("win");
   updateDisplay();
   document.querySelectorAll(".cell").forEach((cell) => {
-    cell.classList.remove("error", "selected", "highlight");
+    cell.classList.remove("error", "selected", "highlight", "hinted");
   });
 }
 
@@ -250,7 +257,7 @@ function generateGame(level = "medium") {
 
   // Clear previous selection
   document.querySelectorAll(".cell").forEach((cell) => {
-    cell.classList.remove("given", "error", "selected", "highlight");
+    cell.classList.remove("given", "error", "selected", "highlight", "hinted");
   });
   // Generate a complete valid Sudoku solution
   generateSolution();
@@ -334,14 +341,23 @@ function isValidPlacement(grid, row, col, num) {
     }
   }
 
+  // Check anti-knight constraint
+  for (let [dr, dc] of knightMoves) {
+    const newRow = row + dr;
+    const newCol = col + dc;
+    if (newRow >= 0 && newRow < 9 && newCol >= 0 && newCol < 9) {
+      if (grid[newRow][newCol] === num) return false;
+    }
+  }
+
   return true;
 }
 
 function createPuzzle(level = "medium") {
   const levelSettings = {
-    easy: { minClues: 37, maxClues: 40 },
-    medium: { minClues: 27, maxClues: 35 },
-    hard: { minClues: 17, maxClues: 25 },
+    easy: { minClues: 40, maxClues: 45 },
+    medium: { minClues: 34, maxClues: 39 },
+    hard: { minClues: 28, maxClues: 33 },
   };
 
   const settings = levelSettings[level];
@@ -413,9 +429,10 @@ function shuffleArray(array) {
 }
 
 function getHint() {
-  checkForErrors(); // Check for any errors already present on the board
+  // Check for errors first
+  checkForErrors();
 
-  // Find error cells that violate Sudoku rules
+  // Check for error cells that violate Sudoku rules
   const errorCellElements = document.querySelectorAll(".cell.error");
   const errorCells = [];
 
@@ -424,20 +441,18 @@ function getHint() {
     const row = Math.floor(cellIndex / 9);
     const col = cellIndex % 9;
 
-    // Only include non-given (editable) cells
+    // Only include editable cells
     if (initialBoard[row][col] === 0) {
       errorCells.push([row, col]);
     }
   });
 
   if (errorCells.length > 0) {
-    // If there are error cells, try to correct one of them
     const randomIndex = Math.floor(Math.random() * errorCells.length);
     const [row, col] = errorCells[randomIndex];
 
     // Check if placing a hint here violates the knight's move rule
     if (isValidMove(row, col, solution[row][col])) {
-      // Place the hint
       board[row][col] = solution[row][col];
       hintsUsed++;
 
@@ -449,19 +464,11 @@ function getHint() {
       updateDisplay();
       document.getElementById("status").textContent =
         "Error corrected with hint!";
-
-      // If the board is complete and valid, show the win message
-      if (isBoardComplete() && isValidSolution()) {
-        stopTimer();
-        document.getElementById("status").textContent =
-          "Congratulations! You solved it!";
-        document.getElementById("status").classList.add("win");
-      }
+      return;
     }
-    return;
   }
 
-  // If there are no error cells, check for empty cells that can be filled
+  // If no error cells, check empty cells for valid hint placement
   const emptyCells = [];
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
@@ -471,14 +478,12 @@ function getHint() {
     }
   }
 
-  // If there are empty cells, fill one randomly, but check for knight's move constraint
   if (emptyCells.length > 0) {
     const randomIndex = Math.floor(Math.random() * emptyCells.length);
     const [row, col] = emptyCells[randomIndex];
 
-    // Check if placing a hint here violates the knight's move rule
+    // Check for knight's move violation before placing hint
     if (isValidMove(row, col, solution[row][col])) {
-      // Place the hint
       board[row][col] = solution[row][col];
       hintsUsed++;
 
@@ -489,20 +494,11 @@ function getHint() {
       updateHintsDisplay();
       updateDisplay();
       document.getElementById("status").textContent = "Hint used!";
-
-      // If the board is complete and valid, show the win message
-      if (isBoardComplete() && isValidSolution()) {
-        stopTimer();
-        document.getElementById("status").textContent =
-          "Congratulations! You solved it!";
-        document.getElementById("status").classList.add("win");
-      }
+    } else {
+      document.getElementById("status").textContent =
+        "No valid hint available!";
     }
-    return;
   }
-
-  // If no valid hint could be placed, display a message
-  document.getElementById("status").textContent = "No valid hint available!";
 }
 
 function checkSolution() {
@@ -571,9 +567,26 @@ document.addEventListener("click", (e) => {
 // Keyboard support
 document.addEventListener("keydown", (e) => {
   if (e.key >= "1" && e.key <= "9") {
-    setSelectedNumber(parseInt(e.key));
-  } else if (e.key === "Delete" || e.key === "Backspace") {
+    if (selectedCell !== null) {
+      const row = Math.floor(selectedCell / 9);
+      const col = selectedCell % 9;
+
+      // If the selected cell is a "given" cell, clear the selection
+      if (initialBoard[row][col] !== 0) {
+        clearSelected();
+      }
+      if (initialBoard[row][col] === 0) {
+        setSelectedNumber(parseInt(e.key));
+      }
+    }
+    clearHighlight();
+    highlightRelated(parseInt(e.key));
+  }
+  if (e.key === "Delete" || e.key === "Backspace") {
     setSelectedNumber(0);
+  }
+  if (e.key === "h" || e.key === "H") {
+    getHint();
   }
   if (selectedCell != null) {
     highlightRelated(parseInt(e.key));
@@ -598,6 +611,15 @@ document.addEventListener("keydown", (e) => {
       }
     }
     selectCell(selectedCell);
+  }
+});
+
+document.addEventListener("click", (e) => {
+  const gameElement = document.getElementById("game-area");
+
+  // If the click is outside the board area, clear selection
+  if (!gameElement.contains(e.target)) {
+    clearSelected();
   }
 });
 
