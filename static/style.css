@@ -89,7 +89,9 @@ nav ul li a {
   height: auto;
   object-fit: contain;
   border-radius: 8px;
-  margin-bottom: 15px;
+  border: 2px solid bisque;
+  padding: 3px;
+  margin-bottom: 10px;
   flex-shrink: 0;
 }
 
