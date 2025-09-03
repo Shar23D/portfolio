@@ -312,11 +312,6 @@ footer {
   transform: translateY(-1px);
 }
 
-footer {
-  position: relative;
-  bottom: 0;
-}
-
 @keyframes winDisplay {
   0% {
     background-color: var(--highlight);
