@@ -17,6 +17,8 @@ let initialBoard = Array(9)
 let selectedCell = null;
 let selectedNumber = 1;
 let currentLevel = "medium";
+let isNoteMode = false;
+let notes = {};
 
 // Timer variables
 let startTime = null;
@@ -34,6 +36,20 @@ const knightMoves = [
   [2, 1],
 ];
 
+// Initialize the occurrences map
+const numberOccurrences = new Map();
+
+function incrementOccurrence(num) {
+  if (num >= 1 && num <= 9) {
+    numberOccurrences.set(num, numberOccurrences.get(num) + 1);
+  }
+}
+
+function decrementOccurrence(num) {
+  if (num >= 1 && num <= 9) {
+    numberOccurrences.set(num, numberOccurrences.get(num) - 1);
+  }
+}
 // Create 9x9 grid in HTML
 function createBoard() {
   const boardElement = document.getElementById("board");
@@ -53,9 +69,6 @@ function selectCell(index) {
   // Eg: cell 6 is in row 6, col 0; cell 31 is in row 3, col 4
   const row = Math.floor(index / 9);
   const col = index % 9;
-
-  // Can't select given numbers
-  //if (initialBoard[row][col] !== 0) return;
 
   // Clear previous selection
   document.querySelectorAll(".cell").forEach((cell) => {
@@ -95,28 +108,120 @@ function clearHighlight() {
   });
 }
 
+function updateNumberButtonState() {
+  let showWarning = false;
+
+  for (let i = 1; i <= 9; i++) {
+    const button = document.getElementById(`number-${i}`);
+
+    if (button instanceof HTMLButtonElement) {
+      if (numberOccurrences.get(i) >= 9) {
+        button.disabled = true;
+        showWarning = true;
+      } else {
+        button.disabled = false;
+      }
+    }
+  }
+
+  if (showWarning) {
+    updateStatusDisplay("Number can't be placed more than 9 times");
+  }
+}
+
 // Set selected cell with the selected number
 function setSelectedNumber(num) {
   selectedNumber = num;
+  // Prevent placing numbers more than 9 times
+  if (selectedNumber !== 0 && numberOccurrences.get(selectedNumber) >= 9) {
+    updateStatusDisplay(`Number ${selectedNumber} has been used 9 times.`);
+    return;
+  }
   clearHighlight();
   highlightRelated(num);
   if (selectedCell !== null) {
     const row = Math.floor(selectedCell / 9);
     const col = selectedCell % 9;
+    const cell = document.querySelectorAll(".cell")[selectedCell];
+    if (initialBoard[row][col] !== 0 || cell.classList.contains("hinted")) {
+      return;
+    }
+
+    const key = `${row}-${col}`;
+    if (isNoteMode) {
+      if (!notes[key]) {
+        notes[key] = [];
+      }
+
+      if (num === 0) {
+        // Clear notes
+        delete notes[key];
+      } else {
+        // Notes shouldn't be added if number is maxed out
+        if (numberOccurrences.get(num) >= 9) {
+          updateStatusDisplay(`You can't note ${num}, it's used 9 times.`);
+          return;
+        }
+        /*if (!isValidMove(row, col, num)) {
+          return;
+        }*/
+        const idx = notes[key].indexOf(num);
+        if (idx === -1) {
+          notes[key].push(num);
+          notes[key].sort();
+        } else {
+          notes[key].splice(idx, 1); // Toggle off
+          if (notes[key].length === 0) {
+            delete notes[key];
+          }
+        }
+      }
+      updateDisplay();
+      return;
+    }
 
     // Only modify non-given cells
-    if (initialBoard[row][col] === 0) {
-      board[row][col] = num;
+    const prevNum = board[row][col]; // Store current number
 
-      clearHighlight();
-      highlightRelated(num);
-      updateDisplay();
-      checkForErrors();
+    if (prevNum !== 0) {
+      // Decrement previous number count
+      decrementOccurrence(prevNum);
+    }
 
-      if (isBoardComplete() && isValidSolution()) {
-        document.getElementById("status").textContent =
-          "Congratulations! You solved it!";
-        document.getElementById("status").classList.add("win");
+    board[row][col] = num;
+
+    // Remove any notes if placing actual number
+    delete notes[key];
+
+    if (num !== 0) {
+      // Increment new number count
+      incrementOccurrence(num);
+    }
+
+    // Update the button's disabled state if the number is used up
+    updateNumberButtonState();
+
+    clearHighlight();
+    highlightRelated(num);
+    updateDisplay();
+    checkForErrors();
+
+    if (isBoardComplete() && isValidSolution()) {
+      winDisplay();
+    }
+  }
+}
+
+function resetNumberOccurrences() {
+  for (let i = 1; i <= 9; i++) {
+    numberOccurrences.set(i, 0);
+  }
+
+  for (let row = 0; row < 9; row++) {
+    for (let col = 0; col < 9; col++) {
+      const num = board[row][col];
+      if (num !== 0) {
+        incrementOccurrence(num);
       }
     }
   }
@@ -136,21 +241,33 @@ function updateDisplay() {
     const row = Math.floor(i / 9);
     const col = i % 9;
     const cell = cells[i];
+    const key = `${row}-${col}`;
 
-    // If the cell is 0, make it empty in HTML, otherwise add the given number to the cell
-    cell.textContent = board[row][col] === 0 ? "" : board[row][col];
+    cell.innerHTML = "";
 
-    // Only remove error if cell is now valid
+    if (board[row][col] !== 0) {
+      // Main number
+      cell.textContent = board[row][col];
+      cell.classList.remove("note");
+    } else if (notes[key]) {
+      // Render notes
+      cell.classList.add("note");
+      for (let n = 1; n <= 9; n++) {
+        const noteEl = document.createElement("span");
+        noteEl.textContent = notes[key].includes(n) ? n : "";
+        cell.appendChild(noteEl);
+      }
+    } else {
+      cell.classList.remove("note");
+      cell.textContent = "";
+    }
+
+    // Error state
     if (board[row][col] === 0 || isValidMove(row, col, board[row][col])) {
       cell.classList.remove("error");
     }
 
-    // Remove highlight if it was hinted
-    if (cell.classList.contains("hinted")) {
-      cell.classList.remove("highlight");
-    }
-
-    // If the cell isn't 0, then there's a given number so add the class given to that cell element (for css)
+    // Given numbers
     if (initialBoard[row][col] !== 0) {
       cell.classList.add("given");
     }
@@ -233,14 +350,17 @@ function isValidSolution() {
 
 // Reset board to starting state
 function resetGame() {
+  startTimer();
   board = initialBoard.map((row) => [...row]);
   selectedCell = null;
-  document.getElementById("status").textContent = "";
-  document.getElementById("status").classList.remove("win");
+  updateStatusDisplay("");
   updateDisplay();
   document.querySelectorAll(".cell").forEach((cell) => {
-    cell.classList.remove("error", "selected", "highlight", "hinted");
+    cell.classList.remove("error", "selected", "highlight", "hinted", "win");
   });
+  resetNumberOccurrences();
+  updateNumberButtonState();
+  updateStatusDisplay("Game reset");
 }
 
 function showLevelPopup() {
@@ -257,7 +377,14 @@ function generateGame(level = "medium") {
 
   // Clear previous selection
   document.querySelectorAll(".cell").forEach((cell) => {
-    cell.classList.remove("given", "error", "selected", "highlight", "hinted");
+    cell.classList.remove(
+      "given",
+      "error",
+      "selected",
+      "highlight",
+      "hinted",
+      "win"
+    );
   });
   // Generate a complete valid Sudoku solution
   generateSolution();
@@ -274,9 +401,10 @@ function generateGame(level = "medium") {
   updateLevelDisplay();
   updateHintsDisplay();
   startTimer();
+  resetNumberOccurrences();
+  updateNumberButtonState();
 
-  document.getElementById("status").textContent = "";
-  document.getElementById("status").classList.remove("win");
+  updateStatusDisplay("Have fun!");
   updateDisplay();
 }
 
@@ -460,10 +588,14 @@ function getHint() {
       const cells = document.querySelectorAll(".cell");
       cells[index].classList.add("hinted");
 
+      const hintNum = solution[row][col];
+      incrementOccurrence(hintNum);
+
+      updateNumberButtonState();
+
       updateHintsDisplay();
       updateDisplay();
-      document.getElementById("status").textContent =
-        "Error corrected with hint!";
+      updateStatusDisplay("Error corrected with hint!");
       return;
     }
   }
@@ -491,30 +623,64 @@ function getHint() {
       const cells = document.querySelectorAll(".cell");
       cells[index].classList.add("hinted");
 
+      const hintNum = solution[row][col];
+      incrementOccurrence(hintNum);
+
+      updateNumberButtonState();
+
       updateHintsDisplay();
       updateDisplay();
-      document.getElementById("status").textContent = "Hint used!";
+      updateStatusDisplay("Hint used!");
     } else {
-      document.getElementById("status").textContent =
-        "No valid hint available!";
+      updateStatusDisplay("No valid hint available!");
     }
+  }
+  if (isBoardComplete() && isValidSolution()) {
+    winDisplay();
   }
 }
 
 function checkSolution() {
   if (isBoardComplete()) {
     if (isValidSolution()) {
-      document.getElementById("status").textContent =
-        "Perfect! You solved it correctly!";
-      document.getElementById("status").classList.add("win");
+      winDisplay();
     } else {
-      document.getElementById("status").textContent =
-        "There are some errors. Keep trying!";
+      updateStatusDisplay("There are some errors. Keep trying!");
     }
   } else {
-    document.getElementById("status").textContent =
-      "Puzzle is not complete yet.";
+    updateStatusDisplay("Puzzle is not complete yet.");
   }
+}
+
+function toggleNoteMode() {
+  isNoteMode = !isNoteMode;
+  if (isNoteMode) {
+    handleNoteEntry();
+    document.getElementById("note-btn").classList.add("noteOn");
+    document.querySelectorAll(".number-btn").forEach((button) => {
+      button.classList.add("noteOn");
+    });
+    updateStatusDisplay("Note mode on");
+  }
+  if (!isNoteMode) {
+    document.getElementById("note-btn").classList.remove("noteOn");
+    document.querySelectorAll(".number-btn").forEach((button) => {
+      button.classList.remove("noteOn");
+    });
+    updateStatusDisplay("Note mode off");
+  }
+}
+
+function handleNoteEntry() {}
+
+function winDisplay() {
+  updateStatusDisplay("Perfect! You solved it correctly!");
+  document.getElementById("status").classList.add("win");
+  document.querySelectorAll(".cell").forEach((cell) => {
+    cell.classList.remove("selected", "highlight");
+    cell.classList.add("win");
+  });
+  stopTimer();
 }
 
 // Timer functions
@@ -556,23 +722,44 @@ function updateLevelDisplay() {
   document.getElementById("level").textContent = levelNames[currentLevel];
 }
 
-// Close popup when clicking outside
+function updateStatusDisplay(message) {
+  const statusElement = document.getElementById("status");
+  statusElement.textContent = message;
+  statusElement.classList.remove("win");
+  statusElement.classList.add("visible");
+  setTimeout(() => {
+    statusElement.textContent = "";
+    statusElement.classList.remove("visible");
+  }, 5000);
+}
+
+// Close popup and clear selected cell when clicking outside
 document.addEventListener("click", (e) => {
   const popup = document.getElementById("levelPopup");
   if (e.target === popup) {
     hideLevelPopup();
+  }
+  const gameElement = document.getElementById("game-area");
+  if (!gameElement.contains(e.target)) {
+    clearSelected();
   }
 });
 
 // Keyboard support
 document.addEventListener("keydown", (e) => {
   if (e.key >= "1" && e.key <= "9") {
+    const num = parseInt(e.key);
+    if (numberOccurrences.get(num) >= 9) {
+      updateStatusDisplay(`Number ${num} is already used 9 times.`);
+      return;
+    }
     if (selectedCell !== null) {
       const row = Math.floor(selectedCell / 9);
       const col = selectedCell % 9;
+      const cell = document.querySelectorAll(".cell")[selectedCell];
 
       // If the selected cell is a "given" cell, clear the selection
-      if (initialBoard[row][col] !== 0) {
+      if (initialBoard[row][col] !== 0 || cell.classList.contains("hinted")) {
         clearSelected();
       }
       if (initialBoard[row][col] === 0) {
@@ -585,8 +772,14 @@ document.addEventListener("keydown", (e) => {
   if (e.key === "Delete" || e.key === "Backspace") {
     setSelectedNumber(0);
   }
-  if (e.key === "h" || e.key === "H") {
+  if (e.key.toLowerCase() === "r") {
+    resetGame();
+  }
+  if (e.key.toLowerCase() === "h") {
     getHint();
+  }
+  if (e.key.toLowerCase() === "n") {
+    toggleNoteMode();
   }
   if (selectedCell != null) {
     highlightRelated(parseInt(e.key));
@@ -611,15 +804,6 @@ document.addEventListener("keydown", (e) => {
       }
     }
     selectCell(selectedCell);
-  }
-});
-
-document.addEventListener("click", (e) => {
-  const gameElement = document.getElementById("game-area");
-
-  // If the click is outside the board area, clear selection
-  if (!gameElement.contains(e.target)) {
-    clearSelected();
   }
 });
 

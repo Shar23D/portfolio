@@ -35,15 +35,69 @@
       <div id="game-area">
         <div id="board"></div>
         <div class="number-input">
-          <button class="number-btn" onclick="setSelectedNumber(1)">1</button>
-          <button class="number-btn" onclick="setSelectedNumber(2)">2</button>
-          <button class="number-btn" onclick="setSelectedNumber(3)">3</button>
-          <button class="number-btn" onclick="setSelectedNumber(4)">4</button>
-          <button class="number-btn" onclick="setSelectedNumber(5)">5</button>
-          <button class="number-btn" onclick="setSelectedNumber(6)">6</button>
-          <button class="number-btn" onclick="setSelectedNumber(7)">7</button>
-          <button class="number-btn" onclick="setSelectedNumber(8)">8</button>
-          <button class="number-btn" onclick="setSelectedNumber(9)">9</button>
+          <button
+            class="number-btn"
+            id="number-1"
+            onclick="setSelectedNumber(1)"
+          >
+            1
+          </button>
+          <button
+            class="number-btn"
+            id="number-2"
+            onclick="setSelectedNumber(2)"
+          >
+            2
+          </button>
+          <button
+            class="number-btn"
+            id="number-3"
+            onclick="setSelectedNumber(3)"
+          >
+            3
+          </button>
+          <button
+            class="number-btn"
+            id="number-4"
+            onclick="setSelectedNumber(4)"
+          >
+            4
+          </button>
+          <button
+            class="number-btn"
+            id="number-5"
+            onclick="setSelectedNumber(5)"
+          >
+            5
+          </button>
+          <button
+            class="number-btn"
+            id="number-6"
+            onclick="setSelectedNumber(6)"
+          >
+            6
+          </button>
+          <button
+            class="number-btn"
+            id="number-7"
+            onclick="setSelectedNumber(7)"
+          >
+            7
+          </button>
+          <button
+            class="number-btn"
+            id="number-8"
+            onclick="setSelectedNumber(8)"
+          >
+            8
+          </button>
+          <button
+            class="number-btn"
+            id="number-9"
+            onclick="setSelectedNumber(9)"
+          >
+            9
+          </button>
           <button class="number-btn" onclick="setSelectedNumber(0)">✗</button>
         </div>
         <div class="menu">
@@ -51,6 +105,9 @@
           <button class="button" onclick="showLevelPopup()">New Game</button>
           <button class="button" onclick="getHint()">Hint</button>
           <button class="button" onclick="checkSolution()">Check</button>
+          <button class="button" id="note-btn" onclick="toggleNoteMode()">
+            Note
+          </button>
         </div>
         <div class="status" id="status"></div>
 
