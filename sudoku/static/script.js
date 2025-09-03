@@ -117,15 +117,10 @@ function updateNumberButtonState() {
     if (button instanceof HTMLButtonElement) {
       if (numberOccurrences.get(i) >= 9) {
         button.disabled = true;
-        showWarning = true;
       } else {
         button.disabled = false;
       }
     }
-  }
-
-  if (showWarning) {
-    updateStatusDisplay("Number can't be placed more than 9 times");
   }
 }
 
