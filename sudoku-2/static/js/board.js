@@ -39,8 +39,8 @@ export function createBoard() {
 
 export function selectCell(index) {
   // Eg: cell 6 is in row 6, col 0; cell 31 is in row 3, col 4
-  const row = Math.floor(index / 9);
-  const col = index % 9;
+  const row = calRow(index);
+  const col = calCol(index);
 
   // Clear previous selection
   document.querySelectorAll(".cell").forEach((cell) => {
@@ -70,7 +70,7 @@ export function setSelectedNumber(num) {
   clearHighlight();
   highlightRelated(num);
 
-  const row = calcRow(selectedCell);
+  const row = calRow(selectedCell);
   const col = calCol(selectedCell);
   if (selectedCell !== null) {
     const cell = document.querySelectorAll(".cell")[selectedCell];
@@ -129,7 +129,7 @@ export function removeClass(element, label) {
   element.classList.remove(label);
 }
 
-export function calcRow(cell) {
+export function calRow(cell) {
   return Math.floor(cell / 9);
 }
 
