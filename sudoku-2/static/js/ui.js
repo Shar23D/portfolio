@@ -1,8 +1,9 @@
 import { board, initialBoard, addClass, removeClass } from "./board";
-import { numberOccurrences } from "./validation";
-import { isValidMove } from "./validation";
+import { numberOccurrences } from "./occurrencesCounter";
+import { isValidPlacement } from "./validation";
 
 export const statusElement = document.getElementById("status");
+export let hintsUsed = 0;
 
 export function highlightRelated(value) {
   const cells = document.querySelectorAll(".cell");
@@ -24,7 +25,6 @@ export function clearHighlight() {
     removeClass(cell, "highlight");
   });
 }
-
 
 // Handle number button state
 export function updateNumberButtonState() {
@@ -55,28 +55,31 @@ function updateDisplay() {
     if (board[row][col] !== 0) {
       // Main number
       cell.textContent = board[row][col];
-      removeClass(cell,"note");
+      removeClass(cell, "note");
     } else if (notes[key]) {
       // Render notes
-      addClass(cell,"note");
+      addClass(cell, "note");
       for (let n = 1; n <= 9; n++) {
         const noteEl = document.createElement("span");
         noteEl.textContent = notes[key].includes(n) ? n : "";
         cell.appendChild(noteEl);
       }
     } else {
-      removeClass(cell,"note");
+      removeClass(cell, "note");
       cell.textContent = "";
     }
 
     // Error state
-    if (board[row][col] === 0 || isValidMove(row, col, board[row][col])) {
-      removeClass(cell,"error");
+    if (
+      board[row][col] === 0 ||
+      isValidPlacement(board, row, col, board[row][col])
+    ) {
+      removeClass(cell, "error");
     }
 
     // Given numbers
     if (initialBoard[row][col] !== 0) {
-      addClass(cell,"given");
+      addClass(cell, "given");
     }
   }
 }
@@ -92,15 +95,14 @@ function checkForErrors() {
 
       if (
         board[i][j] !== 0 &&
-        !isValidMove(i, j, board[i][j]) &&
+        !isValidPlacement(board, i, j, board[i][j]) &&
         !cells[index].classList.contains("given")
       ) {
-        addClass(cell,"error");
+        addClass(cell, "error");
       }
     }
   }
 }
-
 
 export function updateStatusDisplay(message) {
   statusElement.textContent = message;
@@ -114,10 +116,10 @@ export function updateStatusDisplay(message) {
 
 export function winDisplay() {
   updateStatusDisplay("Perfect! You solved it correctly!");
-  addClass(statusElement,"win");
+  addClass(statusElement, "win");
   document.querySelectorAll(".cell").forEach((cell) => {
-    removeClass(cell,"selected");
-    removeClass(cell,"highlight");
+    removeClass(cell, "selected");
+    removeClass(cell, "highlight");
     addClass(cell, "win");
   });
   stopTimer();

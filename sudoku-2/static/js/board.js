@@ -1,8 +1,5 @@
-import {
-  isNumberActive,
-  incrementOccurrence,
-  decrementOccurrence,
-} from "./validation";
+import { isNumberActive } from "./validation";
+import { incrementOccurrence, decrementOccurrence } from "./occurrencesCounter";
 import { updateStatusDisplay, clearHighlight, highlightRelated } from "./ui";
 import { handleNotes, clearNotes } from "./noteMode";
 
@@ -134,6 +131,5 @@ export function calRow(cell) {
 }
 
 export function calCol(cell) {
-  return selectedCell % 9;
+  return cell % 9;
 }
-
