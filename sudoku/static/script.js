@@ -2,17 +2,14 @@
 // Array(9).fill(): [undefined,...(x9)]
 // .map(() => Array(9).fill(0)): create [0,0,0,0,0,0,0,0,0] for each undefined spot in the first array
 // board: current game board for user
-let board = Array(9)
-  .fill()
-  .map(() => Array(9).fill(0));
+
+//import { copyGrid, createEmptyGrid } from "./helper.js";
+
+let board = createEmptyGrid();
 // solution: completed/solved board used for hints
-let solution = Array(9)
-  .fill()
-  .map(() => Array(9).fill(0));
+let solution = createEmptyGrid();
 // initialBoard: puzzle board that is generated after removes # cells based on level; used to track given cells for reset and editable cells
-let initialBoard = Array(9)
-  .fill()
-  .map(() => Array(9).fill(0));
+let initialBoard = createEmptyGrid();
 
 let selectedCell = null;
 let selectedNumber = 1;
@@ -289,48 +286,9 @@ function checkForErrors() {
   }
 }
 
-// Check if the number can be added in a cell
+// Check if the number can be added in a cell of the game board
 function isValidMove(row, col, num) {
-  // Check row
-  for (let j = 0; j < 9; j++) {
-    if (j !== col && board[row][j] === num) return false;
-  }
-
-  // Check column
-  for (let i = 0; i < 9; i++) {
-    if (i !== row && board[i][col] === num) return false;
-  }
-
-  // Check 3x3 box
-  const boxRow = Math.floor(row / 3) * 3;
-  const boxCol = Math.floor(col / 3) * 3;
-
-  for (let i = boxRow; i < boxRow + 3; i++) {
-    for (let j = boxCol; j < boxCol + 3; j++) {
-      if ((i !== row || j !== col) && board[i][j] === num) return false;
-    }
-  }
-
-  // Check anti-knight constraint
-  for (let [dr, dc] of knightMoves) {
-    const newRow = row + dr;
-    const newCol = col + dc;
-    if (newRow >= 0 && newRow < 9 && newCol >= 0 && newCol < 9) {
-      if (board[newRow][newCol] === num) return false; // Can't place the number in cells reachable by knight's move
-    }
-  }
-
-  return true;
-}
-
-// Check if all cells are filled
-function isBoardComplete() {
-  for (let i = 0; i < 9; i++) {
-    for (let j = 0; j < 9; j++) {
-      if (board[i][j] === 0) return false;
-    }
-  }
-  return true;
+  return isValidPlacement(board, row, col, num);
 }
 
 // Check if the board is solved
@@ -346,8 +304,9 @@ function isValidSolution() {
 // Reset board to starting state
 function resetGame() {
   startTimer();
-  board = initialBoard.map((row) => [...row]);
+  board = copyGrid(initialBoard);
   selectedCell = null;
+  notes = {};
   updateStatusDisplay("");
   updateDisplay();
   document.querySelectorAll(".cell").forEach((cell) => {
@@ -388,7 +347,7 @@ function generateGame(level = "medium") {
   createPuzzle(level);
 
   // Set up the game
-  initialBoard = board.map((row) => [...row]);
+  initialBoard = copyGrid(board);
   selectedCell = null;
   hintsUsed = 0;
 
@@ -411,7 +370,7 @@ function generateSolution() {
 
   // Create a complete and valid sudoku board
   solveSudoku(board);
-  solution = board.map((row) => [...row]);
+  solution = copyGrid(board);
 }
 
 function solveSudoku(grid) {
@@ -443,6 +402,17 @@ function solveSudoku(grid) {
   return true;
 }
 
+// Check if all cells are filled
+function isBoardComplete() {
+  for (let i = 0; i < 9; i++) {
+    for (let j = 0; j < 9; j++) {
+      if (board[i][j] === 0) return false;
+    }
+  }
+  return true;
+}
+
+// Validation of a general grid
 function isValidPlacement(grid, row, col, num) {
   // Check row
   for (let j = 0; j < 9; j++) {
@@ -517,7 +487,7 @@ function createPuzzle(level = "medium") {
 }
 
 function hasUniqueSolution(grid) {
-  const gridCopy = grid.map((row) => [...row]);
+  const gridCopy = copyGrid(grid);
   let solutionCount = 0;
 
   function countSolutions(board) {
@@ -552,86 +522,47 @@ function shuffleArray(array) {
 }
 
 function getHint() {
-  // Check for errors first
-  checkForErrors();
+  // Try to place the correct solution value even if it means overwriting an incorrect value
+  const emptyOrWrongCells = [];
 
-  // Check for error cells that violate Sudoku rules
-  const errorCellElements = document.querySelectorAll(".cell.error");
-  const errorCells = [];
-
-  errorCellElements.forEach((cell, index) => {
-    const cellIndex = parseInt(cell.dataset.index);
-    const row = Math.floor(cellIndex / 9);
-    const col = cellIndex % 9;
-
-    // Only include editable cells
-    if (initialBoard[row][col] === 0) {
-      errorCells.push([row, col]);
-    }
-  });
-
-  if (errorCells.length > 0) {
-    const randomIndex = Math.floor(Math.random() * errorCells.length);
-    const [row, col] = errorCells[randomIndex];
-
-    // Check if placing a hint here violates the knight's move rule
-    if (isValidMove(row, col, solution[row][col])) {
-      board[row][col] = solution[row][col];
-      hintsUsed++;
-
-      const index = row * 9 + col;
-      const cells = document.querySelectorAll(".cell");
-      cells[index].classList.add("hinted");
-
-      const hintNum = solution[row][col];
-      incrementOccurrence(hintNum);
-
-      updateNumberButtonState();
-
-      updateHintsDisplay();
-      updateDisplay();
-      updateStatusDisplay("Error corrected with hint!");
-      return;
-    }
-  }
-
-  // If no error cells, check empty cells for valid hint placement
-  const emptyCells = [];
   for (let i = 0; i < 9; i++) {
     for (let j = 0; j < 9; j++) {
-      if (initialBoard[i][j] === 0 && board[i][j] === 0) {
-        emptyCells.push([i, j]);
+      if (initialBoard[i][j] === 0 && board[i][j] !== solution[i][j]) {
+        emptyOrWrongCells.push([i, j]);
       }
     }
   }
 
-  if (emptyCells.length > 0) {
-    const randomIndex = Math.floor(Math.random() * emptyCells.length);
-    const [row, col] = emptyCells[randomIndex];
+  if (emptyOrWrongCells.length > 0) {
+    const randomIndex = Math.floor(Math.random() * emptyOrWrongCells.length);
+    const [row, col] = emptyOrWrongCells[randomIndex];
 
-    // Check for knight's move violation before placing hint
-    if (isValidMove(row, col, solution[row][col])) {
-      board[row][col] = solution[row][col];
-      hintsUsed++;
+    const currentNum = board[row][col];
+    const newNum = solution[row][col];
 
-      const index = row * 9 + col;
-      const cells = document.querySelectorAll(".cell");
-      cells[index].classList.add("hinted");
-
-      const hintNum = solution[row][col];
-      incrementOccurrence(hintNum);
-
-      updateNumberButtonState();
-
-      updateHintsDisplay();
-      updateDisplay();
-      updateStatusDisplay("Hint used!");
-    } else {
-      updateStatusDisplay("No valid hint available!");
+    if (currentNum !== 0) {
+      decrementOccurrence(currentNum);
     }
-  }
-  if (isBoardComplete() && isValidSolution()) {
-    winDisplay();
+
+    board[row][col] = newNum;
+    incrementOccurrence(newNum);
+
+    hintsUsed++;
+
+    const index = row * 9 + col;
+    const cells = document.querySelectorAll(".cell");
+    cells[index].classList.add("hinted");
+
+    updateNumberButtonState();
+    updateHintsDisplay();
+    updateDisplay();
+    updateStatusDisplay("Hint used!");
+
+    if (isBoardComplete() && isValidSolution()) {
+      winDisplay();
+    }
+
+    return;
   }
 }
 
@@ -801,6 +732,21 @@ document.addEventListener("keydown", (e) => {
     selectCell(selectedCell);
   }
 });
+
+// Helper functions
+function createEmptyGrid() {
+  return Array.from({ length: 9 }, () => Array(9).fill(0));
+}
+
+function copyGrid(grid) {
+  return grid.map((row) => [...row]);
+}
+
+function removeCellClass(...classes) {
+  document.querySelectorAll(".cell").forEach((cell) => {
+    classes.forEach((cls) => cell.classList.remove(cls));
+  });
+}
 
 // Initialize the game
 createBoard();
