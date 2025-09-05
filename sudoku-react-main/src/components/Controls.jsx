@@ -7,7 +7,7 @@ const Controls = ({
   handleHint,
 }) => {
   return (
-    <div style={{ marginTop: 16 }}>
+    <div style={{ marginTop: 10 }}>
       <button onClick={handleCheck} style={{ marginRight: 8 }}>
         Check
       </button>
@@ -29,7 +29,7 @@ const Controls = ({
           cursor: "pointer",
         }}
       >
-        {isNoteMode ? "Notes ON" : "Notes OFF"}
+        Notes
       </button>
       <button onClick={handleHint}>Hint</button>
     </div>

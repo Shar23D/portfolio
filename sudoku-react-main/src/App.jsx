@@ -3,6 +3,7 @@ import "./App.css";
 import Grid from "./components/Grid";
 import Controls from "./components/Controls";
 import DifficultyModal from "./components/DifficultyModal";
+import NumberPad from "./components/NumberPad";
 import { findViolations } from "./utils/validation";
 import { useEffect } from "react";
 import { fetchPuzzle } from "./fetch-puzzle";
@@ -26,8 +27,11 @@ function App() {
       .map(() => Array(9).fill(null))
   );
 
+  const [timerSeconds, setTimerSeconds] = useState(0);
+  const [hintsUsed, setHintsUsed] = useState(0);
   const [status, setStatus] = useState(null);
   const [statusType, setStatusType] = useState(null);
+  const [isComplete, setIsComplete] = useState(false);
   const [error, setError] = useState("");
   const [selected, setSelected] = useState(null);
   const [correctCount, setCorrectCount] = useState(0);
@@ -41,6 +45,7 @@ function App() {
       .map(() => Array(9).fill(() => new Set()))
       .map((row) => row.map((cell) => cell()))
   );
+
   const [highlightedNumber, setHighlightedNumber] = useState(null);
 
   useEffect(() => {
@@ -89,6 +94,24 @@ function App() {
     document.addEventListener("click", handleClickOutside);
     return () => document.removeEventListener("click", handleClickOutside);
   }, []);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimerSeconds((s) => s + 1), 1000);
+    return () => clearInterval(timer);
+  }, [puzzle]); // reset when puzzle changes
+
+  function formatTime(seconds) {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+  }
+
+  // Compute counts for number inputs
+  const counts = board.flat().reduce((acc, num) => {
+    if (num != null) acc[num] = (acc[num] || 0) + 1;
+    return acc;
+  }, {});
+
   const handleCheck = () => {
     const flatBoard = board.flat();
     const flatSolution = solution.flat();
@@ -96,6 +119,7 @@ function App() {
     if (flatBoard.every((cell, i) => cell === flatSolution[i])) {
       setStatus("🎉 Congratulations! Puzzle solved! 🎉");
       setStatusType("success");
+      setIsComplete(true);
 
       let count = 0;
       const totalCells = 81;
@@ -121,6 +145,8 @@ function App() {
     setBoard(puzzle.map((row) => [...row]));
     setStatus("🔄 Puzzle reset to original state");
     setStatusType("info");
+    setTimerSeconds(0);
+    setHintsUsed(0);
     setSelected(null);
     setCorrectCount(0);
     clearHighlights();
@@ -145,6 +171,8 @@ function App() {
 
   const handleNewPuzzle = () => {
     setShowDifficultyModal(true);
+    setTimerSeconds(0);
+    setHintsUsed(0);
     clearHighlights();
   };
 
@@ -214,6 +242,7 @@ function App() {
 
       setSelected([r, c]);
       setStatus(`💡 Fixed incorrect cell at row ${r + 1}, column ${c + 1}`);
+      setHintsUsed(hintsUsed + 1);
       setStatusType("hint");
       // Clear hint message after 3 seconds
       setTimeout(() => {
@@ -268,6 +297,7 @@ function App() {
 
     setSelected([r, c]);
     setStatus(`💡 Added hint at row ${r + 1}, column ${c + 1}`);
+    setHintsUsed(hintsUsed + 1);
     setStatusType("hint");
 
     // Clear hint message after 3 seconds
@@ -282,6 +312,11 @@ function App() {
   const handleInput = (rIdx, cIdx, value) => {
     if (value === "" || /^[1-9]$/.test(value)) {
       const num = parseInt(value);
+      const currentValue = board[rIdx][cIdx];
+      const isSameValue = num === currentValue;
+
+      // Prevent inserting a number that's already at max count (unless it's being replaced)
+      if (!isSameValue && num && counts[num] >= 9) return;
 
       if (isNoteMode) {
         // Toggle note
@@ -393,7 +428,9 @@ function App() {
 
     // If user presses a number key (1-9), replace the current value or add/remove note
     if (key >= "1" && key <= "9") {
-      e.preventDefault(); // Prevent default input behavior
+      const num = parseInt(key);
+      if (counts[num] >= 9) return; // prevent adding more than 9 of a number
+      e.preventDefault();
       handleInput(rIdx, cIdx, key);
     } else if (key === "Delete" || key === "Backspace" || key === " ") {
       e.preventDefault();
@@ -435,13 +472,18 @@ function App() {
   return (
     <div style={{ textAlign: "center" }}>
       <h1>Let's play Sudoku!</h1>
-      <div className="difficulty-display">
-        Current Difficulty:{" "}
-        <span className="current-difficulty">
-          {currentDifficulty.toUpperCase()}
-        </span>
-        {isNoteMode && <span className="note-indicator"> | NOTE MODE</span>}
+      <div className="game-info">
+        <div>
+          Time: <b>{formatTime(timerSeconds)}</b>
+        </div>
+        <div>
+          Level: <b>{currentDifficulty.toUpperCase()}</b>
+        </div>
+        <div>
+          Hints Used: <b>{hintsUsed}</b>
+        </div>
       </div>
+
       <Grid
         board={board}
         handleInput={handleInput}
@@ -456,7 +498,11 @@ function App() {
         selectedValue={selected ? board[selected[0]][selected[1]] : null}
         highlightedNumber={highlightedNumber}
       />
-
+      <NumberPad
+        handleInput={handleInput}
+        selected={selected}
+        counts={counts}
+      />
       <Controls
         handleCheck={handleCheck}
         handleReset={handleReset}
@@ -465,7 +511,6 @@ function App() {
         setIsNoteMode={setIsNoteMode}
         handleHint={handleHint}
       />
-
       {status && (
         <div className={`status status-${statusType || "default"}`}>
           {status}
