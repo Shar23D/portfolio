@@ -1,0 +1,417 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Georgia", serif;
+  background: #0a0a0a;
+  color: #333;
+  overflow-x: hidden;
+  min-height: 100vh;
+}
+
+/* Stars background */
+.stars {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: -1;
+  transition: all 1s ease;
+}
+
+.stars.flying {
+  filter: blur(3px);
+  transform: scale(1.2);
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: white;
+  border-radius: 50%;
+  opacity: 0.8;
+  animation: twinkle 3s infinite;
+}
+
+.star.streak {
+  animation: starStreak 2s linear infinite;
+}
+
+/* Journal Phase */
+.journal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+  transition: all 1s ease;
+}
+
+.journal-container.hidden {
+  opacity: 0;
+  transform: translateY(-100px);
+  pointer-events: none;
+}
+
+.paper {
+  width: 80vw;
+  max-width: 600px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 10px 40px rgba(255, 255, 255, 0.1);
+  position: relative;
+  padding: 40px 50px;
+  margin: 20px;
+  transition: all 1s ease;
+}
+
+.paper::before {
+  content: "";
+  position: absolute;
+  left: 70px;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: #ff6b6b;
+}
+
+.paper-lines {
+  background-image: repeating-linear-gradient(
+    transparent,
+    transparent 24px,
+    #ccc 24px,
+    #ccc 26px
+  );
+  min-height: 400px;
+}
+
+.journal-textarea {
+  width: 100%;
+  height: 400px;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: "Courier New", monospace;
+  font-size: 16px;
+  line-height: 26px;
+  color: #333;
+  resize: none;
+  padding-left: 30px;
+}
+
+.journal-title {
+  color: white;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.5);
+}
+
+.journal-subtitle {
+  color: #ccc;
+  text-align: center;
+  margin-bottom: 30px;
+  font-size: 1.1rem;
+}
+
+.crumple-button {
+  margin-top: 20px;
+  padding: 15px 30px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+.crumple-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}
+
+.crumple-button:disabled {
+  background: #666;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Game Phase */
+.game-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  display: none;
+  overflow: hidden;
+}
+
+.game-container.active {
+  display: block;
+}
+
+.slingshot-area {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 300px;
+  background: linear-gradient(to top, rgba(20, 20, 40, 0.9), transparent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.slingshot {
+  position: relative;
+  width: 100px;
+  height: 120px;
+}
+
+.slingshot-base {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 60px;
+  background: #8b4513;
+  border-radius: 10px;
+}
+
+.slingshot-left,
+.slingshot-right {
+  position: absolute;
+  bottom: 50px;
+  width: 8px;
+  height: 80px;
+  background: #654321;
+  border-radius: 4px;
+  transform-origin: bottom center;
+}
+
+.slingshot-left {
+  left: 35%;
+  transform: translateX(-50%) rotate(-20deg);
+}
+
+.slingshot-right {
+  right: 35%;
+  transform: translateX(50%) rotate(20deg);
+}
+
+/* Realistic Crumpled Paper Ball */
+.paper-ball {
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  background: radial-gradient(
+      ellipse 8px 6px at 25% 20%,
+      rgba(255, 255, 255, 0.9),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 6px 4px at 75% 30%,
+      rgba(240, 240, 240, 0.8),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 10px 8px at 40% 70%,
+      rgba(220, 220, 220, 0.7),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 5px 7px at 80% 60%,
+      rgba(200, 200, 200, 0.6),
+      transparent
+    ),
+    linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 30%, #d0d0d0 70%, #c0c0c0 100%);
+  border-radius: 47% 53% 44% 56% / 45% 48% 52% 55%;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: pointer;
+  box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.3),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.1),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.8);
+  transition: all 0.3s ease;
+}
+
+.paper-ball::before {
+  content: "";
+  position: absolute;
+  width: 12px;
+  height: 8px;
+  background: rgba(180, 180, 180, 0.6);
+  border-radius: 60% 40% 70% 30% / 50% 60% 40% 50%;
+  top: 15px;
+  left: 8px;
+  box-shadow: 2px 2px 3px rgba(0, 0, 0, 0.2);
+}
+
+.paper-ball::after {
+  content: "";
+  position: absolute;
+  width: 8px;
+  height: 6px;
+  background: rgba(160, 160, 160, 0.5);
+  border-radius: 50% 70% 30% 50% / 60% 40% 60% 40%;
+  top: 25px;
+  right: 10px;
+  box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
+}
+
+.paper-ball:hover {
+  transform: translateX(-50%) scale(1.1);
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.4),
+    inset -2px -2px 4px rgba(0, 0, 0, 0.15),
+    inset 2px 2px 4px rgba(255, 255, 255, 0.9);
+}
+
+.paper-ball.charging {
+  animation: crumpledPulse 0.5s infinite alternate;
+}
+
+.power-gauge {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 300px;
+  height: 20px;
+  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.power-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #4caf50, #ffc107, #ff5722, #8a2be2);
+  border-radius: 8px;
+  width: 0%;
+  transition: width 0.1s ease;
+}
+
+.power-text {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: white;
+  font-weight: bold;
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* Flight View */
+.flight-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background: radial-gradient(ellipse at center, #1a1a2e 0%, #000 100%);
+  display: none;
+  overflow: hidden;
+}
+
+.flight-view.active {
+  display: block;
+}
+
+.flying-paper {
+  position: absolute;
+  width: 30px;
+  height: 30px;
+  background: radial-gradient(
+      ellipse 6px 4px at 25% 20%,
+      rgba(255, 255, 255, 0.9),
+      transparent
+    ),
+    radial-gradient(
+      ellipse 4px 3px at 75% 30%,
+      rgba(240, 240, 240, 0.8),
+      transparent
+    ),
+    linear-gradient(135deg, #f5f5f5 0%, #e8e8e8 30%, #d0d0d0 70%, #c0c0c0 100%);
+  border-radius: 47% 53% 44% 56% / 45% 48% 52% 55%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.target {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(0);
+  transition: all 2s ease;
+  z-index: 5;
+}
+
+.target.visible {
+  transform: translate(-50%, -50%) scale(1);
+}
+
+.space-particles {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.space-particle {
+  position: absolute;
+  width: 3px;
+  height: 3px;
+  background: white;
+  border-radius: 50%;
+}
+
+.completion-message {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: white;
+  text-align: center;
+  font-size: 1.5rem;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 40px;
+  border-radius: 20px;
+  max-width: 80%;
+  backdrop-filter: blur(10px);
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  display: none;
+  z-index: 20;
+}
+
+.restart-button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  color: white;
+  border: none;
+  border-radius: 25px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.restart-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+}

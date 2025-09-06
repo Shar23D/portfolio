@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Space Journal - Let Your Worries Fly</title>
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/animations.css" />
+    <link rel="stylesheet" href="css/targets.css" />
+  </head>
+  <body>
+    <!-- Stars Background -->
+    <div class="stars" id="starsContainer"></div>
+
+    <!-- Journal Phase -->
+    <div class="journal-container" id="journalContainer">
+      <h1 class="journal-title">Space Journal</h1>
+      <p class="journal-subtitle">
+        Write down what's troubling you, then launch it into space
+      </p>
+
+      <div class="paper">
+        <div class="paper-lines">
+          <textarea
+            class="journal-textarea"
+            id="journalText"
+            placeholder="Dear Space... Today I'm feeling..."
+          ></textarea>
+        </div>
+      </div>
+
+      <button class="crumple-button" id="crumpleButton" disabled>
+        Crumple Paper & Launch Into Space
+      </button>
+    </div>
+
+    <!-- Game Phase -->
+    <div class="game-container" id="gameContainer">
+      <div class="slingshot-area">
+        <div class="slingshot">
+          <div class="slingshot-base"></div>
+          <div class="slingshot-left"></div>
+          <div class="slingshot-right"></div>
+          <div class="paper-ball" id="paperBall"></div>
+        </div>
+
+        <div class="power-gauge">
+          <div class="power-fill" id="powerFill"></div>
+        </div>
+        <div class="power-text" id="powerText">
+          Hold the paper to charge your launch
+        </div>
+      </div>
+    </div>
+
+    <!-- Flight View -->
+    <div class="flight-view" id="flightView">
+      <div class="space-particles" id="spaceParticles"></div>
+      <div class="flying-paper" id="flyingPaper"></div>
+      <div class="target" id="target"></div>
+    </div>
+
+    <!-- Completion Message -->
+    <div class="completion-message" id="completionMessage">
+      <div id="messageText"></div>
+      <button class="restart-button" id="restartButton">
+        Write Another Entry
+      </button>
+    </div>
+
+    <!-- Load JavaScript modules -->
+    <script type="module" src="js/main.js"></script>
+  </body>
+</html>
