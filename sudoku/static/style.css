@@ -1,9 +1,12 @@
+/* 
+Variables
+ */
 :root {
   --given: #d5d8c8;
   --selected: #fff9bd;
   --hinted: #e7efc7;
   --win: #dee791;
-  --highlight: #e1ff9a;
+  --highlight: #dff6aa;
   --error: #ffcdd2;
   --primary: #0a400c;
   --secondary: #eeefe0;
@@ -12,6 +15,9 @@
   --button: #d3ebe1;
 }
 
+/* 
+   Base Styles
+ */
 body {
   display: grid;
   justify-items: center;
@@ -42,6 +48,9 @@ p {
   color: var(--primary);
 }
 
+/* 
+   Stats Bar
+ */
 .stats {
   display: flex;
   justify-content: space-between;
@@ -70,6 +79,9 @@ p {
   color: var(--primary);
 }
 
+/* 
+   Sudoku Board
+ */
 #board {
   display: grid;
   width: 458px;
@@ -110,6 +122,9 @@ p {
   margin: 0 2px;
 }
 
+/* 
+   Cell States
+ */
 .cell:hover {
   background: var(--secondary);
 }
@@ -124,14 +139,12 @@ p {
 .cell.hinted {
   background: var(--hinted);
 }
-
 .cell.selected {
   background: var(--selected);
 }
 .cell.highlight {
   background: var(--highlight);
 }
-
 .cell.error {
   background: var(--error);
 }
@@ -148,7 +161,9 @@ p {
   animation-iteration-count: infinite;
 }
 
-/* 3x3 grid borders */
+/* 
+   3x3 Grid Borders
+ */
 .cell:nth-child(3n):not(:nth-child(9n)) {
   border-right: 2px solid var(--main-border);
 }
@@ -158,6 +173,9 @@ p {
   border-bottom: 2px solid var(--main-border);
 }
 
+/* 
+   Menu & Buttons
+ */
 .menu {
   display: flex;
   justify-content: center;
@@ -178,7 +196,6 @@ p {
 .button:hover {
   background-color: var(--secondary);
 }
-
 .button:active {
   transform: translateY(1px);
 }
@@ -187,6 +204,7 @@ p {
   background-color: var(--secondary);
 }
 
+/* Number Pad */
 .number-input {
   display: flex;
   justify-content: center;
@@ -210,16 +228,17 @@ p {
 .number-btn:hover {
   background-color: var(--secondary);
 }
-
 .number-btn:disabled {
   color: var(--given);
   cursor: not-allowed;
 }
-
 .number-btn.noteOn {
   font-size: 12px;
 }
 
+/* 
+   Status
+ */
 .status {
   text-align: center;
   margin-top: 1rem;
@@ -233,12 +252,25 @@ p {
   font-size: 24px;
 }
 
+/* 
+   Footer
+ */
 footer {
   margin-top: 1rem;
   text-align: center;
   color: var(--primary);
+  position: relative;
+  bottom: 0;
 }
 
+footer a {
+  text-decoration: none;
+  color: var(--main-border);
+}
+
+/* 
+   Popup Overlay
+ */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -290,6 +322,9 @@ footer {
   color: var(--primary);
 }
 
+/* 
+   Level Buttons
+ */
 .level-buttons {
   display: flex;
   flex-direction: column;
@@ -312,11 +347,9 @@ footer {
   transform: translateY(-1px);
 }
 
-footer {
-  position: relative;
-  bottom: 0;
-}
-
+/* 
+   Animations
+ */
 @keyframes winDisplay {
   0% {
     background-color: var(--highlight);
@@ -332,31 +365,29 @@ footer {
   }
 }
 
+/* 
+   Responsive
+ */
 @media (max-width: 600px) {
   .stats {
     flex-direction: column;
     gap: 1rem;
   }
-
   #board {
     width: 323px;
     grid-template-columns: repeat(9, 35px);
     grid-template-rows: repeat(9, 35px);
   }
-
   .cell {
     font-size: 16px;
   }
-
   .cell.note {
     font-size: 8px;
   }
-
   .menu {
     flex-direction: column;
     align-items: center;
   }
-
   .popup {
     margin: 1rem;
     min-width: auto;
