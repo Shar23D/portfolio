@@ -21,13 +21,30 @@ export class GamePhase {
       this.startCharging();
     });
 
+    this.elements.paperBall.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      this.startCharging();
+    });
+
     document.addEventListener("mouseup", () => {
       if (this.isCharging) {
         this.launch();
       }
     });
 
+    document.addEventListener("touchend", () => {
+      if (this.isCharging) {
+        this.launch();
+      }
+    });
+
     document.addEventListener("mouseleave", () => {
+      if (this.isCharging) {
+        this.launch();
+      }
+    });
+
+    document.addEventListener("touchcancel", () => {
       if (this.isCharging) {
         this.launch();
       }
