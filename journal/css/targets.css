@@ -1,203 +1,28 @@
-/* Enhanced Targets */
+/* Trash Can */
 .trash-can {
-  font-size: 120px;
+  font-size: 100px;
   filter: drop-shadow(0 0 30px rgba(102, 102, 102, 0.6));
-  animation: trashFloat 3s ease-in-out infinite;
+  animation: floating 3s ease-in-out infinite;
 }
 
-@keyframes trashFloat {
+/* Fire */
+.fire {
+  font-size: 120px;
+  filter: drop-shadow(0 0 30px rgba(102, 102, 102, 0.6));
+  animation: floating 3s ease-in-out infinite;
+}
+
+@keyframes floating {
   0%,
   100% {
     transform: translateY(0px);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-8px);
   }
 }
 
-.fire {
-  width: 180px;
-  height: 200px;
-  position: relative;
-  display: flex;
-  align-items: flex-end;
-  justify-content: center;
-}
-
-.fire-base {
-  width: 80px;
-  height: 40px;
-  background: radial-gradient(ellipse at center, #8b0000, #4b0000);
-  border-radius: 50%;
-  position: absolute;
-  bottom: 0;
-  z-index: 1;
-}
-
-.fire-flame {
-  position: absolute;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-  bottom: 30px;
-  filter: blur(1px);
-}
-
-.fire-flame:nth-child(1) {
-  width: 50px;
-  height: 120px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 69, 0, 0.9) 0%,
-    rgba(255, 140, 0, 0.8) 40%,
-    rgba(255, 215, 0, 0.6) 80%,
-    transparent 100%
-  );
-  left: 65px;
-  animation: flame1 2s infinite ease-in-out;
-  z-index: 3;
-}
-
-.fire-flame:nth-child(2) {
-  width: 60px;
-  height: 140px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 140, 0, 0.8) 0%,
-    rgba(255, 69, 0, 0.7) 30%,
-    rgba(255, 215, 0, 0.5) 70%,
-    transparent 100%
-  );
-  left: 60px;
-  animation: flame2 1.8s infinite ease-in-out;
-  animation-delay: -0.4s;
-  z-index: 2;
-}
-
-.fire-flame:nth-child(3) {
-  width: 45px;
-  height: 100px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 69, 0, 0.9) 0%,
-    rgba(255, 215, 0, 0.7) 50%,
-    rgba(255, 255, 0, 0.4) 90%,
-    transparent 100%
-  );
-  left: 35px;
-  animation: flame3 2.2s infinite ease-in-out;
-  animation-delay: -0.8s;
-  z-index: 2;
-}
-
-.fire-flame:nth-child(4) {
-  width: 40px;
-  height: 110px;
-  background: linear-gradient(
-    0deg,
-    rgba(255, 140, 0, 0.8) 0%,
-    rgba(255, 69, 0, 0.6) 40%,
-    rgba(255, 215, 0, 0.4) 80%,
-    transparent 100%
-  );
-  left: 105px;
-  animation: flame4 1.9s infinite ease-in-out;
-  animation-delay: -1.2s;
-  z-index: 2;
-}
-
-.fire-core {
-  width: 70px;
-  height: 60px;
-  background: radial-gradient(
-    circle at center,
-    rgba(255, 255, 255, 0.9) 0%,
-    rgba(255, 215, 0, 0.8) 30%,
-    rgba(255, 69, 0, 0.6) 100%
-  );
-  border-radius: 50% 50% 50% 50% / 40% 40% 60% 60%;
-  position: absolute;
-  bottom: 35px;
-  left: 55px;
-  animation: fireCore 1s infinite ease-in-out alternate;
-  z-index: 4;
-}
-
-@keyframes fireCore {
-  0% {
-    transform: scale(1) rotate(-2deg);
-  }
-  100% {
-    transform: scale(1.1) rotate(2deg);
-  }
-}
-
-@keyframes flame1 {
-  0%,
-  100% {
-    transform: scaleY(1) scaleX(1) rotate(-3deg) translateX(0px);
-    opacity: 0.9;
-  }
-  25% {
-    transform: scaleY(1.2) scaleX(0.8) rotate(2deg) translateX(-5px);
-    opacity: 1;
-  }
-  50% {
-    transform: scaleY(0.9) scaleX(1.1) rotate(-1deg) translateX(3px);
-    opacity: 0.8;
-  }
-  75% {
-    transform: scaleY(1.1) scaleX(0.9) rotate(3deg) translateX(-2px);
-    opacity: 1;
-  }
-}
-
-@keyframes flame2 {
-  0%,
-  100% {
-    transform: scaleY(1) scaleX(1) rotate(2deg) translateX(0px);
-    opacity: 0.8;
-  }
-  33% {
-    transform: scaleY(1.3) scaleX(0.7) rotate(-3deg) translateX(4px);
-    opacity: 0.9;
-  }
-  66% {
-    transform: scaleY(0.8) scaleX(1.2) rotate(1deg) translateX(-3px);
-    opacity: 0.7;
-  }
-}
-
-@keyframes flame3 {
-  0%,
-  100% {
-    transform: scaleY(1) scaleX(1) rotate(1deg) translateX(0px);
-    opacity: 0.9;
-  }
-  40% {
-    transform: scaleY(1.1) scaleX(0.9) rotate(-2deg) translateX(2px);
-    opacity: 1;
-  }
-  80% {
-    transform: scaleY(0.9) scaleX(1.1) rotate(3deg) translateX(-4px);
-    opacity: 0.8;
-  }
-}
-
-@keyframes flame4 {
-  0%,
-  100% {
-    transform: scaleY(1) scaleX(1) rotate(-1deg) translateX(0px);
-    opacity: 0.8;
-  }
-  30% {
-    transform: scaleY(1.2) scaleX(0.8) rotate(2deg) translateX(-3px);
-    opacity: 0.9;
-  }
-  70% {
-    transform: scaleY(0.9) scaleX(1.1) rotate(-3deg) translateX(5px);
-    opacity: 0.7;
-  }
-}
-
+/* Sun */
 .sun {
   width: 200px;
   height: 200px;
@@ -336,6 +161,8 @@
   }
 }
 
+/* Blackhole */
+
 .blackhole {
   width: 250px;
   height: 250px;
@@ -465,5 +292,19 @@
   100% {
     transform: rotate(360deg) translateX(30px) scale(0.1);
     opacity: 0;
+  }
+}
+
+@keyframes targetApproach {
+  0% {
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.7;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1.5);
+    opacity: 1;
   }
 }

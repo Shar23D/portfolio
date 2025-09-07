@@ -6,26 +6,29 @@ export class Targets {
         min: 0,
         max: 25,
         html: `<div class="trash-can">🗑️</div>`,
-        flightDuration: 1200,
+        flightDuration: 4000,
         messages: [
           "Your worries have been discarded into the cosmic waste bin.",
           "Sometimes the simplest disposal is the most effective.",
           "Thrown away among the stars, never to return.",
         ],
       },
+
+      // {
+      //   name: "tornado",
+      //   min: 20,
+      //   max: 40,
+      //   html: `<div class="tornado">🌪️</div>`,
+      //   flightDuration: 4000,
+      //   messages: [""],
+      // },
+
       {
         name: "fire",
         min: 25,
         max: 50,
-        html: `<div class="fire">
-                         <div class="fire-flame"></div>
-                         <div class="fire-flame"></div>
-                         <div class="fire-flame"></div>
-                         <div class="fire-flame"></div>
-                         <div class="fire-core"></div>
-                         <div class="fire-base"></div>
-                       </div>`,
-        flightDuration: 2000,
+        html: `<div class="fire">🔥</div>`,
+        flightDuration: 4500,
         messages: [
           "Your troubles burn away in cosmic flames.",
           "The fire of the universe consumes your worries completely.",
@@ -48,7 +51,7 @@ export class Targets {
                          <div class="sun-flare"></div>
                          <div class="sun-flare"></div>
                        </div>`,
-        flightDuration: 3000,
+        flightDuration: 5000,
         messages: [
           "The sun's nuclear fire vaporizes your concerns instantly.",
           "Your worries become energy, fueling the light of stars.",
@@ -68,7 +71,7 @@ export class Targets {
                          <div class="blackhole-particle"></div>
                          <div class="blackhole-particle"></div>
                        </div>`,
-        flightDuration: 4500,
+        flightDuration: 6000,
         messages: [
           "Your deepest fears collapse into the singularity, beyond space and time.",
           "The black hole's infinite gravity crushes your worries out of existence.",
@@ -78,6 +81,7 @@ export class Targets {
     ];
   }
 
+  /* Target resizing - bigger as ball "flies" closer*/
   getTargetForPower(power) {
     return (
       this.targets.find(

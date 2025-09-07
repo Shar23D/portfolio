@@ -25,8 +25,8 @@ body {
 }
 
 .stars.flying {
-  filter: blur(3px);
-  transform: scale(1.2);
+  filter: blur(2px);
+  transform: scale(1.1);
 }
 
 .star {
@@ -39,8 +39,17 @@ body {
   animation: twinkle 3s infinite;
 }
 
-.star.streak {
-  animation: starStreak 2s linear infinite;
+/* Star streak animations - these override the default twinkle */
+.star.streak-horizontal {
+  animation: starStreak 1.5s linear infinite !important;
+}
+
+.star.streak-vertical {
+  animation: starStreakVertical 1.8s linear infinite !important;
+}
+
+.star.streak-diagonal {
+  animation: starStreakDiagonal 2s linear infinite !important;
 }
 
 /* Journal Phase */
@@ -210,7 +219,7 @@ body {
   transform: translateX(50%) rotate(20deg);
 }
 
-/* Realistic Crumpled Paper Ball */
+/* Crumpled Paper Ball */
 .paper-ball {
   position: absolute;
   width: 40px;

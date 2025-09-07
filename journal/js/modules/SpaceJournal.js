@@ -74,10 +74,17 @@ export class SpaceJournal {
     this.elements.gameContainer.classList.remove("active");
     this.elements.flightView.classList.add("active");
 
+    // Enable flight mode for stars (streaks)
     this.modules.starField.enableFlightMode();
-    this.modules.flightPhase.start(target, () => {
-      this.showCompletionMessage(target);
-    });
+
+    // Start the flight phase with starField reference
+    this.modules.flightPhase.start(
+      target,
+      () => {
+        this.showCompletionMessage(target);
+      },
+      this.modules.starField
+    );
   }
 
   showCompletionMessage(target) {
@@ -96,13 +103,16 @@ export class SpaceJournal {
     this.elements.gameContainer.classList.remove("active");
     this.elements.journalContainer.style.display = "flex";
 
-    this.modules.starField.disableFlightMode();
+    // Reset all modules
+    this.modules.starField.reset();
     this.modules.gamePhase.reset();
     this.modules.flightPhase.reset();
 
+    // Reset form
     this.elements.journalText.value = "";
     this.updateCrumpleButton();
 
+    // Reset paper animation
     const paper = document.querySelector(".paper");
     paper.style.animation = "";
     paper.style.opacity = "1";
