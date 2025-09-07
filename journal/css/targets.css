@@ -1,15 +1,19 @@
 /* Trash Can */
-.trash-can {
-  font-size: 100px;
+.trash-can,
+.fire,
+.tornado {
   filter: drop-shadow(0 0 30px rgba(102, 102, 102, 0.6));
   animation: floating 3s ease-in-out infinite;
 }
 
+.trash-can {
+  font-size: 100px;
+}
+
 /* Fire */
-.fire {
+.fire,
+.tornado {
   font-size: 120px;
-  filter: drop-shadow(0 0 30px rgba(102, 102, 102, 0.6));
-  animation: floating 3s ease-in-out infinite;
 }
 
 @keyframes floating {

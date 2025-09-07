@@ -4,7 +4,8 @@ export class Targets {
       {
         name: "trash",
         min: 0,
-        max: 25,
+        max: 20,
+        emoji: "🗑️",
         html: `<div class="trash-can">🗑️</div>`,
         flightDuration: 4000,
         messages: [
@@ -13,20 +14,11 @@ export class Targets {
           "Thrown away among the stars, never to return.",
         ],
       },
-
-      // {
-      //   name: "tornado",
-      //   min: 20,
-      //   max: 40,
-      //   html: `<div class="tornado">🌪️</div>`,
-      //   flightDuration: 4000,
-      //   messages: [""],
-      // },
-
       {
         name: "fire",
-        min: 25,
-        max: 50,
+        min: 20,
+        max: 40,
+        emoji: "🔥",
         html: `<div class="fire">🔥</div>`,
         flightDuration: 4500,
         messages: [
@@ -36,21 +28,32 @@ export class Targets {
         ],
       },
       {
+        name: "tornado",
+        min: 40,
+        max: 60,
+        emoji: "🌪️",
+        html: `<div class="tornado">🌪️</div>`,
+        flightDuration: 4500,
+        messages: [
+          "Your worries are swept away in a cosmic whirlwind.",
+          "The tornado carries your troubles to distant galaxies.",
+          "Scattered by stellar winds, never to reform.",
+        ],
+      },
+      {
         name: "sun",
-        min: 50,
-        max: 75,
+        min: 60,
+        max: 80,
+        emoji: "☀️",
         html: `<div class="sun">
-                         <div class="sun-ray"></div>
-                         <div class="sun-ray"></div>
-                         <div class="sun-ray"></div>
-                         <div class="sun-ray"></div>
-                         <div class="sun-ray"></div>
-                         <div class="sun-ray"></div>
-                         <div class="sun-core"></div>
-                         <div class="sun-flare"></div>
-                         <div class="sun-flare"></div>
-                         <div class="sun-flare"></div>
-                       </div>`,
+                       <div class="sun-ray"></div>
+                       <div class="sun-ray"></div>
+                       <div class="sun-ray"></div>
+                       <div class="sun-ray"></div>
+                       <div class="sun-ray"></div>
+                       <div class="sun-ray"></div>
+                       <div class="sun-core"></div>
+                     </div>`,
         flightDuration: 5000,
         messages: [
           "The sun's nuclear fire vaporizes your concerns instantly.",
@@ -60,17 +63,15 @@ export class Targets {
       },
       {
         name: "blackhole",
-        min: 75,
+        min: 80,
         max: 100,
+        emoji: "🕳️",
         html: `<div class="blackhole">
-                         <div class="blackhole-accretion"></div>
-                         <div class="blackhole-accretion"></div>
-                         <div class="blackhole-event-horizon"></div>
-                         <div class="blackhole-singularity"></div>
-                         <div class="blackhole-particle"></div>
-                         <div class="blackhole-particle"></div>
-                         <div class="blackhole-particle"></div>
-                       </div>`,
+                       <div class="blackhole-accretion"></div>
+                       <div class="blackhole-accretion"></div>
+                       <div class="blackhole-event-horizon"></div>
+                       <div class="blackhole-singularity"></div>
+                     </div>`,
         flightDuration: 6000,
         messages: [
           "Your deepest fears collapse into the singularity, beyond space and time.",

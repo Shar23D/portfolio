@@ -120,6 +120,7 @@ export class FlightPhase {
     const colors = {
       trash: "#888",
       fire: "#FF4500",
+      tornado: "#87CEEB",
       sun: "#FFD700",
       blackhole: "#8A2BE2",
     };
