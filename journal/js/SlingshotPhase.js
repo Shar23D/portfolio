@@ -1,8 +1,11 @@
-export class GamePhase {
-  constructor() {
+export default class SlingshotPhase {
+  constructor(targets) {
+    this.targets = targets;
     this.elements = {
+      slingshotPhase: document.getElementById("slingshotPhase"),
       paperBall: document.getElementById("paperBall"),
-      powerFill: document.getElementById("powerFill"),
+      powerGauge: document.getElementById("powerGauge"),
+      targetEmoji: document.getElementById("targetEmoji"),
       powerText: document.getElementById("powerText"),
     };
 
@@ -20,22 +23,20 @@ export class GamePhase {
       e.preventDefault();
       this.startCharging();
     });
-
     document.addEventListener("mouseup", () => {
-      if (this.isCharging) {
-        this.launch();
-      }
+      if (this.isCharging) this.launch();
     });
-
     document.addEventListener("mouseleave", () => {
-      if (this.isCharging) {
-        this.launch();
-      }
+      if (this.isCharging) this.launch();
     });
   }
 
-  activate() {
+  show() {
+    this.elements.slingshotPhase.classList.add("active");
     this.reset();
+  }
+  hide() {
+    this.elements.slingshotPhase.classList.remove("active");
   }
 
   startCharging() {
@@ -46,14 +47,20 @@ export class GamePhase {
 
     this.chargeInterval = setInterval(() => {
       this.power = Math.min(this.power + 1.5, this.maxPower);
-      this.elements.powerFill.style.width = `${this.power}%`;
-      this.elements.powerText.textContent = `Power: ${Math.floor(this.power)}%`;
+      this.updateTargetDisplay();
     }, 50);
+  }
+
+  updateTargetDisplay() {
+    const target = this.targets.getTargetForPower(this.power);
+    this.elements.targetEmoji.textContent = target.emoji;
+    this.elements.powerText.textContent = `Target: ${
+      target.name.charAt(0).toUpperCase() + target.name.slice(1)
+    } - Power: ${Math.floor(this.power)}%`;
   }
 
   launch() {
     if (!this.isCharging) return;
-
     this.isCharging = false;
     clearInterval(this.chargeInterval);
     this.elements.paperBall.classList.remove("charging");
@@ -63,31 +70,25 @@ export class GamePhase {
       return;
     }
 
-    this.emit("launch", this.power);
+    const target = this.targets.getTargetForPower(this.power);
+    this.emit("launch", target);
   }
 
   reset() {
     this.power = 0;
-    this.elements.powerFill.style.width = "0%";
+    this.elements.targetEmoji.textContent = "🎯";
     this.elements.powerText.textContent =
       "Hold the paper to charge your launch";
     this.isCharging = false;
-    if (this.chargeInterval) {
-      clearInterval(this.chargeInterval);
-    }
+    if (this.chargeInterval) clearInterval(this.chargeInterval);
   }
 
-  // Simple event emitter pattern
   on(event, callback) {
-    if (!this.eventListeners[event]) {
-      this.eventListeners[event] = [];
-    }
+    this.eventListeners[event] = this.eventListeners[event] || [];
     this.eventListeners[event].push(callback);
   }
-
   emit(event, data) {
-    if (this.eventListeners[event]) {
-      this.eventListeners[event].forEach((callback) => callback(data));
-    }
+    if (this.eventListeners[event])
+      this.eventListeners[event].forEach((cb) => cb(data));
   }
 }

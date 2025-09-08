@@ -1,4 +1,4 @@
-export class Targets {
+export default class Targets {
   constructor() {
     this.targets = [
       {
@@ -45,15 +45,7 @@ export class Targets {
         min: 60,
         max: 80,
         emoji: "☀️",
-        html: `<div class="sun">
-                       <div class="sun-ray"></div>
-                       <div class="sun-ray"></div>
-                       <div class="sun-ray"></div>
-                       <div class="sun-ray"></div>
-                       <div class="sun-ray"></div>
-                       <div class="sun-ray"></div>
-                       <div class="sun-core"></div>
-                     </div>`,
+        html: `<div class="sun"><div class="sun-ray"></div><div class="sun-ray"></div><div class="sun-ray"></div><div class="sun-ray"></div><div class="sun-ray"></div><div class="sun-ray"></div><div class="sun-core"></div></div>`,
         flightDuration: 5000,
         messages: [
           "The sun's nuclear fire vaporizes your concerns instantly.",
@@ -66,12 +58,7 @@ export class Targets {
         min: 80,
         max: 100,
         emoji: "🕳️",
-        html: `<div class="blackhole">
-                       <div class="blackhole-accretion"></div>
-                       <div class="blackhole-accretion"></div>
-                       <div class="blackhole-event-horizon"></div>
-                       <div class="blackhole-singularity"></div>
-                     </div>`,
+        html: `<div class="blackhole"><div class="blackhole-accretion"></div><div class="blackhole-accretion"></div><div class="blackhole-event-horizon"></div><div class="blackhole-singularity"></div></div>`,
         flightDuration: 6000,
         messages: [
           "Your deepest fears collapse into the singularity, beyond space and time.",
@@ -82,7 +69,6 @@ export class Targets {
     ];
   }
 
-  /* Target resizing - bigger as ball "flies" closer*/
   getTargetForPower(power) {
     return (
       this.targets.find(
@@ -91,9 +77,5 @@ export class Targets {
           (power < t.max || t === this.targets[this.targets.length - 1])
       ) || this.targets[0]
     );
-  }
-
-  getAllTargets() {
-    return this.targets;
   }
 }
