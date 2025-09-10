@@ -3,97 +3,208 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Portfolio</title>
-    <link rel="icon" type="image/x-icon" href="static/favicon.ico" />
-    <link rel="stylesheet" href="static/style.css" />
+    <title>Sharon Dang · Portfolio</title>
+    <link rel="icon" type="image/x-icon" href="static/iamges/favicon.ico" />
+    <link rel="stylesheet" href="./static/style.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
   </head>
-
   <body>
-    <nav>
-      <ul>
-        <li><a href="#hero">Home</a></li>
-        <li><a href="#projects">Projects</a></li>
-        <li><a href="#about">About Me</a></li>
-        <li><a href="#contact">Contact</a></li>
-      </ul>
-    </nav>
-    <main>
-      <!-- Hero Section -->
-      <section id="hero">
-        <div class="hero-content">
-          <h1>Hi, I'm <span id="firstName">Sharon</h1>
-          <p>Here are some of my projects.</p>
-        </div>
-      </section>
+    <div class="layout">
+      <!-- LEFT COLUMN -->
+      <aside class="left-col">
+        <div class="hamburger left-hamburger">&#9776;</div>
+        <nav class="navbar">
+          <h2>Sharon Dang</h2>
+          <ul class="nav-links">
+            <li>
+              <a href="https://github.com/Shar23D" target="_blank"
+                ><i class="fab fa-github"></i> GitHub</a
+              >
+            </li>
+            <li>
+              <a
+                href="https://www.linkedin.com/in/sharon-d-b1856a29b"
+                target="_blank"
+                ><i class="fab fa-linkedin"></i> LinkedIn</a
+              >
+            </li>
+            <li>
+              <a href="#" class="contact-link"
+                ><i class="fa fa-envelope"></i> Email</a
+              >
+            </li>
+            <li>
+              <a href="#" class="feedback-link"
+                ><i class="fa-solid fa-lightbulb"></i> Feedback</a
+              >
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
-      <!-- Projects Section -->
-      <section id="projects">
-        <h2>My Projects</h2>
-        <div class="project-tiles">
-          <div class="project-tile">
-            <a href="journal/index.html">
-              <img src="static/journal.png" alt="Project journal" />
-              <h3>Space Journal</h3>
-              <p>
-                User can journal then crumble their paper and launch it into space.
-              </p>
-            </a>
-          </div>
-          <div class="project-tile">
-            <a href="sudoku/index.html">
-              <img src="static/sudoku.png" alt="Project sudoku" />
-              <h3>Sudoku</h3>
-              <p>
-                As a sudoku enthusiatic, I made a sudoku game with html, css, and Javescript for Harvard CS50 final project.
-              </p>
-            </a>
-          </div>
+      <!-- MIDDLE COLUMN -->
+      <main class="middle-col" id="projects">
+        <h2>Projects</h2>
+        <a href="./journal/index.html" class="project-tile" id="space-journal">
+          <img src="./static/images/journal.png" alt="space-journal" />
+          <h3>Space Journal</h3>
+          <p>A playful journaling experience to let go of your thoughts</p>
+          <p>HTML, CSS, JS</p>
+        </a>
 
-          <div class="project-tile">
-            <a href="./sudoku-react/index.html">
-              <img src="static/sudoku-react.png" alt="Project sudoku react" />
-              <h3>Sudoku</h3>
-              <p>This project was done with React.</p>
-            </a>
-          </div>
+        <a
+          href="./sudoku/index.html"
+          class="project-tile"
+          id="antiknight-sudoku"
+        >
+          <img src="./static/images/sudoku.png" alt="antiknight sudoku" />
+          <h3>Anti-Knight Sudoku</h3>
+          <p>Classic sudoku with a twist: chess knight move restriction</p>
+          <p>HTML, CSS, JS</p>
+        </a>
 
-          <div class="project-tile">
-            <a
-              href="https://curious-moose-l44rnr-dev-ed.trailblaze.my.site.com/"
-            >
-              <img src="static/homi-haven.png" alt="Project salesforce" />
-              <h3>Property rental site</h3>
-              <p>This project was done with LWC and Apex in Salesforce for my final project at Revature.</p>
-            </a>
-          </div>
-        </div>
-      </section>
+        <a
+          href="./sudoku-react/index.html"
+          class="project-tile"
+          id="sudoku-react"
+        >
+          <img src="./static/images/sudoku-react.png" alt="sudoku-react" />
+          <h3>Classic sudoku</h3>
+          <p>Classic sudoku with React and Dosuku api</p>
+          <p>HTML, CSS, JS, React</p>
+        </a>
 
-      <!-- About Me Section -->
-      <section id="about">
-        <h2>About Me</h2>
-        <p>
-         <br>A lifelong learner with a B.S. in Cell Biology from UC Davis and an avid reader. My programming journey began with a fascination for technology and problem-solving. I experimented with Google Apps Script to create a custom tool for tracking the books I read, which ignited my passion for coding and led me to explore full-stack development.</br>
-         <br>With a strong foundation in both collaborative and independent work settings, I have honed my problem-solving and analytical thinking skills across various roles. Currently, I am expanding my expertise as a full-stack developer, mastering both front-end and back-end technologies to deliver comprehensive solutions. </br>
-         <br>I am passionate about leveraging my diverse experience and continuous learning to drive innovation and achieve impactful results. Let’s connect and explore how I can contribute to your team or project!
-        </br></p>
-      </section>
-      <!-- Contact Section -->
-      <section id="contact">
-        <h2>Contact</h2>
-        <p>
-          If you'd like to get in touch, feel free to send me an email at
-          <a href="mailto:sharon.dang.ncg@gmail.com"
-            >sharon.dang.ncg@gmail.com</a
-          >
-        </p>
-      </section>
-    </main>
-    <!-- Footer -->
-    <footer>
-      <p>&copy; 2025 Sharon Dang. All Rights Reserved.</p>
-    </footer>
-    <script src="static/script.js"></script>
+        <a
+          href="https://curious-moose-l44rnr-dev-ed.trailblaze.my.site.com/"
+          class="project-tile"
+          id="salesforce-property-site"
+        >
+          <img
+            src="./static/images/homi-haven.png"
+            alt="salesforce-property-site"
+          />
+          <h3>Salesforce Rental Site</h3>
+          <p>A website for property rental on Salesforce Experience Site</p>
+          <p>LWC, Apex</p>
+        </a>
+      </main>
+
+      <!-- RIGHT COLUMN -->
+      <aside class="right-col">
+        <div class="hamburger right-hamburger">&#9776;</div>
+
+        <section class="about-tile" id="about">
+          <h2>About Me <span>Click to learn more</span></h2>
+          <ul>
+            <li class="about-item" data-modal="bio">Biology BS</li>
+            <li class="about-item" data-modal="learner">Lifelong Learner</li>
+            <li class="about-item" data-modal="puzzle">Puzzle Solver</li>
+            <li class="about-item" data-modal="cube">Rubik's Cube Collector</li>
+            <li class="about-item" data-modal="reader">Avid Reader</li>
+          </ul>
+        </section>
+
+        <section class="shortcuts-tile">
+          <h2>Shortcuts</h2>
+          <ul>
+            <li><a href="#space-journal">Space Journal</a></li>
+            <li><a href="#antiknight-sudoku">Anti-Knight Sudoku</a></li>
+            <li><a href="#sudoku-react">Classic Sudoku</a></li>
+            <li>
+              <a href="#salesforce-property-site">Salesforce Property Site</a>
+            </li>
+          </ul>
+        </section>
+
+        <section class="cert-tile">
+          <h2>Certifications</h2>
+          <p>Duke University: Introductory C Programming Specialization</p>
+          <p>Google Data Analytics Specialization</p>
+          <p>Meta Full-Stack Engineer Certificate</p>
+          <p>Salesforce Certified Administrator (SCA)</p>
+          <p>Salesforce Certified Platform Developer I</p>
+        </section>
+      </aside>
+    </div>
+
+    <!-- Email / Feedback Modal -->
+    <div class="modal" id="contact-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Contact Me</h2>
+        <form id="contact-form">
+          <input
+            type="text"
+            name="from_name"
+            placeholder="Your Name"
+            required
+          />
+          <input
+            type="email"
+            name="from_email"
+            placeholder="Your Email"
+            required
+          />
+          <textarea
+            name="message"
+            placeholder="Your message"
+            required
+          ></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal" id="feedback-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h2>Feedback</h2>
+        <form id="feedback-form">
+          <textarea name="message" placeholder="Your feedback"></textarea>
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </div>
+    <div id="popup-message" class="popup-message">
+      <span id="popup-close" class="popup-close">&times;</span>
+      <p id="popup-text"></p>
+    </div>
+    <!-- About Modals -->
+    <div class="about-modal" id="bio-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Biology BS 🎓</h3>
+        <img src="graduation.jpg" alt="Graduation Picture" />
+      </div>
+    </div>
+
+    <div class="about-modal" id="learner-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Lifelong Learner 📚</h3>
+        <ul>
+          <li>Duke University: Introductory C Programming Specialization</li>
+          <li>Google Data Analytics Specialization</li>
+          <li>Meta Full-Stack Engineer Certificate</li>
+          <li>Salesforce Certified Administrator (SCA)</li>
+          <li>Salesforce Certified Platform Developer I</li>
+        </ul>
+      </div>
+    </div>
+    <div class="about-modal" id="reader-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>Books read over time</h3>
+        <img src="./static/images/books-read.png" alt="Books read graph" />
+      </div>
+    </div>
+
+    <!-- Add other about modals similarly -->
+
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3/dist/email.min.js"></script>
+    <script src="./static/script.js"></script>
   </body>
 </html>
