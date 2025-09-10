@@ -123,7 +123,7 @@ document.querySelectorAll('.right-col a[href^="#"]').forEach((link) => {
     if (target) {
       // Scroll the middle column smoothly
       document.querySelector(".middle-col").scrollTo({
-        top: target.offsetTop - 200,
+        top: target.offsetTop - 250,
         behavior: "smooth",
       });
     }

@@ -15,7 +15,7 @@
   left: 0;
   width: 100%;
   display: grid;
-  grid-template-columns: 260px 1fr 450px;
+  grid-template-columns: 3fr 1fr 4fr;
   background: var(--hover-color);
   color: white;
   padding: 0.5rem 1rem;
@@ -31,122 +31,76 @@
 
 .site-header h1 {
   text-align: left;
+  margin-left: 8px;
 }
 
 .site-header h2 {
   text-align: center;
 }
 
-/* Base Layout */
+/* BASE LAYOUT */
+html,
 body {
+  height: 100%;
   margin: 0;
-  padding: 80px 20px 60px;
+  padding: 0;
+  max-width: 100%;
+  overflow: hidden;
   font-family: "Courier New", monospace;
   background: var(--primary-bg);
-  height: 100vh;
-  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  padding-top: 40px;
 }
 
 .layout {
   display: grid;
-  grid-template-columns: 200px 1fr 360px;
-  height: calc(100vh - 150px);
-  gap: 0;
-  height: 90%;
+  grid-template-columns: 1fr 6fr 2fr;
+  flex: 1;
+  margin: 0 1.5rem;
+  height: calc(100vh - 80px - 3rem); /* subtract header + top/bottom margins */
+  overflow: hidden;
+  gap: 10px;
 }
 
+/* COLUMNS */
 .left-col,
 .middle-col,
 .right-col {
-  min-height: 0;
+  height: 100%;
+  min-height: 0; /* allow child scroll */
+  overflow-y: auto;
+  padding: 1rem;
+  box-sizing: border-box;
 }
 
 /* LEFT COLUMN */
 .left-col {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   background: var(--left-bg);
-  padding: 1rem;
   border-right: 2px solid var(--modal-border);
 }
 
-.navbar h2 {
-  margin: 0 0 0.8rem;
-}
-
-/* for all list and links */
-ul {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-li {
-  margin-bottom: 0.5rem;
-}
-
-a {
-  text-decoration: none;
-  color: var(--main-text);
-  transition: color 0.2s, transform 0.2s;
-}
-
-a:hover {
-  color: var(--hover-color);
-  transform: translateX(3px);
-}
-
-/* Middle Column */
+/* MIDDLE COLUMN */
 .middle-col {
-  padding: 0 5rem;
-  height: 100%;
-  margin: 0 auto;
-  overflow-y: auto;
+  background: var(--hover-color);
   scroll-behavior: smooth;
+  margin: 0 auto;
+  width: 55vw;
+  padding-bottom: 50px;
 }
 
-.project-tile {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: flex-start;
-  background: var(--tile-bg);
-  margin-bottom: 2rem;
-  padding: 1rem;
-  border-radius: 12px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-align: center;
-  text-decoration: none;
-}
-
-.project-tile:hover {
-  transform: translateY(-6px) scale(1.2);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
-}
-
-.project-tile img {
-  width: 40%;
-  max-width: 400px;
-  height: auto;
-  border-radius: 6px;
-}
-.project-anchor {
-  display: block;
-  height: 100px; /* same as header height */
-  margin-top: -100px; /* negative offset to keep space */
-  visibility: hidden;
-}
 /* RIGHT COLUMN */
 .right-col {
-  padding: 1.5rem;
-  border-left: 2px solid var(--modal-border);
   background: var(--right-bg);
-  overflow-y: auto;
+  border-left: 2px solid var(--modal-border);
+  padding-bottom: 2rem;
 }
 
+/* TILES */
+.project-tile,
 .about-tile,
 .shortcuts-tile {
   background: var(--tile-bg);
@@ -156,11 +110,55 @@ a:hover {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-.about-tile ul {
-  list-style: none;
-  padding: 0;
+.project-tile {
+  max-width: 70%;
+  margin: 15px auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.2s, box-shadow 0.2s;
 }
 
+.project-tile:hover {
+  transform: translateY(-6px) scale(1.05);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+.project-tile img {
+  width: 40%;
+  max-width: 400px;
+  border-radius: 6px;
+  height: auto;
+}
+.project-tile h3 {
+  margin: 10px;
+}
+.project-tile p {
+  margin: 0;
+}
+
+/* LINKS */
+ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+li {
+  margin-bottom: 0.5rem;
+}
+a {
+  text-decoration: none;
+  color: var(--main-text);
+  transition: color 0.2s, transform 0.2s;
+}
+a:hover {
+  color: var(--hover-color);
+  transform: translateX(3px);
+}
+
+/* ABOUT ITEMS */
 .about-item {
   cursor: pointer;
   margin: 0.5rem 0;
@@ -168,7 +166,6 @@ a:hover {
   border-radius: 5px;
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
-
 .about-item:hover {
   background: var(--left-bg);
   color: var(--hover-color);
@@ -238,6 +235,7 @@ a:hover {
   cursor: pointer;
 }
 
+/* POPUPS */
 .popup-message {
   display: none;
   position: fixed;
@@ -253,7 +251,6 @@ a:hover {
   text-align: center;
   min-width: 250px;
 }
-
 .popup-close {
   position: absolute;
   top: 0.25rem;
@@ -263,7 +260,7 @@ a:hover {
   color: var(--main-text);
 }
 
-/* Hamburger */
+/* HAMBURGER */
 .hamburger {
   display: none;
   font-size: 1.5rem;
@@ -271,24 +268,48 @@ a:hover {
   margin-bottom: 0.25rem;
 }
 
-/* --- Responsive --- */
-@media (max-width: 768px) {
+/* --- RESPONSIVE --- */
+@media (max-width: 1140px) {
   .layout {
+    grid-template-columns: 1fr 3fr 2fr;
+  }
+}
+
+@media (max-width: 800px) {
+  body {
+    padding-top: 0;
+    padding-bottom: 1.5rem;
+  }
+
+  .layout {
+    margin: 1.5rem 0;
+    height: calc(100vh - 80px - 3rem);
     grid-template-columns: 1fr;
-    height: 90vh;
   }
   .left-col,
+  .middle-col,
   .right-col {
-    border: none;
+    padding: 0.5rem;
   }
-  .left-col {
-    position: sticky;
-    padding: 0 0.5rem;
+  .middle-col {
+    margin: 0 auto;
+    width: 100%;
+    box-sizing: border-box;
   }
-  .right-col {
-    position: sticky;
-    margin-bottom: 10px;
-    padding: 0 0.25rem;
+  .project-tile {
+    width: 90%;
+    margin: 0 auto 1rem;
+  }
+  .project-tile img {
+    width: 100%;
+    height: auto;
+  }
+  .project-tile h3 {
+    margin: 5px;
+    font-size: 16px;
+  }
+  .project-tile p {
+    font-size: 14px;
   }
   .left-col .nav-links,
   .left-col .socials,
@@ -300,20 +321,16 @@ a:hover {
     display: block;
   }
   .left-col.expanded .nav-links,
-  .left-col.expanded .socials {
-    display: block;
-  }
+  .left-col.expanded .socials,
   .right-col.expanded .about-tile,
   .right-col.expanded .shortcuts-tile {
     display: block;
   }
   .site-header {
-    display: grid;
     grid-template-columns: 1fr;
     padding: 0.5rem;
   }
   .site-header h1 {
-    grid-column: auto;
     text-align: center;
   }
   .site-header h2 {
