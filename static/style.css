@@ -8,9 +8,38 @@
   --modal-border: #ccc;
 }
 
+/* HEADER */
+.site-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 260px 1fr 450px;
+  background: var(--accent-color);
+  color: white;
+  padding: 0.5rem 1rem;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  align-items: center;
+}
+
+.site-header h1,
+.site-header h2 {
+  margin: 0;
+}
+
+.site-header h1 {
+  text-align: left;
+}
+
+.site-header h2 {
+  text-align: center;
+}
+
 /* Base Layout */
 body {
-  margin: 0 15px;
+  margin: 0 20px;
   font-family: "Courier New", monospace;
   background: var(--primary-bg);
   color: #333;
@@ -20,8 +49,10 @@ body {
 
 .layout {
   display: grid;
-  grid-template-columns: 260px 1fr 300px;
-  height: 100vh;
+  grid-template-columns: 200px 1fr 360px;
+  height: calc(100vh - 60px); /* adjust for header height */
+  margin-top: 60px;
+  overflow: hidden;
 }
 
 /* LEFT COLUMN */
@@ -66,15 +97,6 @@ a:hover {
   width: 80%;
   margin: 0 auto;
   overflow-y: auto;
-}
-
-.middle-col h2 {
-  position: sticky;
-  top: 0;
-  background: var(--primary-bg);
-  padding: 0.5rem;
-  z-index: 10;
-  border-radius: 12px;
 }
 
 .project-tile {
@@ -265,5 +287,17 @@ a:hover {
   .right-col.expanded .cert-tile,
   .right-col.expanded .shortcuts-tile {
     display: block;
+  }
+  .site-header {
+    display: grid;
+    grid-template-columns: 1fr;
+    padding: 0.5rem;
+  }
+  .site-header h1 {
+    grid-column: auto;
+    text-align: center;
+  }
+  .site-header h2 {
+    display: none;
   }
 }
