@@ -111,3 +111,21 @@ document
         autoHidePopup();
       });
   });
+
+// Shortcut links to project tiles
+document.querySelectorAll('.right-col a[href^="#"]').forEach((link) => {
+  link.addEventListener("click", function (e) {
+    e.preventDefault();
+
+    const targetId = this.getAttribute("href").substring(1);
+    const target = document.getElementById(targetId);
+
+    if (target) {
+      // Scroll the middle column smoothly
+      document.querySelector(".middle-col").scrollTo({
+        top: target.offsetTop - 200,
+        behavior: "smooth",
+      });
+    }
+  });
+});

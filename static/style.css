@@ -1,11 +1,11 @@
 :root {
-  --primary-bg: rgba(255, 192, 203, 0.49);
+  --primary-bg: rgb(251, 221, 226);
   --left-bg: #f0eaf5;
   --right-bg: #fdfcff;
   --tile-bg: #ffffff;
-  --accent-color: #7b3fa1;
-  --hover-color: #9b59b6;
-  --modal-border: #ccc;
+  --hover-color: #ceacdc;
+  --modal-border: #ddd;
+  --main-text: #333;
 }
 
 /* HEADER */
@@ -16,7 +16,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 260px 1fr 450px;
-  background: var(--accent-color);
+  background: var(--hover-color);
   color: white;
   padding: 0.5rem 1rem;
   z-index: 1000;
@@ -39,10 +39,10 @@
 
 /* Base Layout */
 body {
-  margin: 0 20px;
+  margin: 0;
+  padding: 80px 20px 60px;
   font-family: "Courier New", monospace;
   background: var(--primary-bg);
-  color: #333;
   height: 100vh;
   overflow: hidden;
 }
@@ -50,9 +50,15 @@ body {
 .layout {
   display: grid;
   grid-template-columns: 200px 1fr 360px;
-  height: calc(100vh - 60px); /* adjust for header height */
-  margin-top: 60px;
-  overflow: hidden;
+  height: calc(100vh - 150px);
+  gap: 0;
+  height: 90%;
+}
+
+.left-col,
+.middle-col,
+.right-col {
+  min-height: 0;
 }
 
 /* LEFT COLUMN */
@@ -62,7 +68,7 @@ body {
   justify-content: space-between;
   background: var(--left-bg);
   padding: 1rem;
-  border-right: 2px solid #ddd;
+  border-right: 2px solid var(--modal-border);
 }
 
 .navbar h2 {
@@ -82,21 +88,22 @@ li {
 
 a {
   text-decoration: none;
-  color: #444;
+  color: var(--main-text);
   transition: color 0.2s, transform 0.2s;
 }
 
 a:hover {
-  color: var(--accent-color);
+  color: var(--hover-color);
   transform: translateX(3px);
 }
 
 /* Middle Column */
 .middle-col {
-  padding: 1.5rem;
-  width: 80%;
+  padding: 0 5rem;
+  height: 100%;
   margin: 0 auto;
   overflow-y: auto;
+  scroll-behavior: smooth;
 }
 
 .project-tile {
@@ -122,15 +129,20 @@ a:hover {
 
 .project-tile img {
   width: 40%;
-  max-width: 200px;
+  max-width: 400px;
   height: auto;
   border-radius: 6px;
 }
-
+.project-anchor {
+  display: block;
+  height: 100px; /* same as header height */
+  margin-top: -100px; /* negative offset to keep space */
+  visibility: hidden;
+}
 /* RIGHT COLUMN */
 .right-col {
   padding: 1.5rem;
-  border-left: 2px solid #ddd;
+  border-left: 2px solid var(--modal-border);
   background: var(--right-bg);
   overflow-y: auto;
 }
@@ -159,14 +171,14 @@ a:hover {
 }
 
 .about-item:hover {
-  background: var(--primary-bg);
-  color: var(--accent-color);
+  background: var(--left-bg);
+  color: var(--hover-color);
   transform: translateX(5px);
 }
 .about-tile h2 span {
   font-size: 12px;
   font-weight: normal;
-  color: #555;
+  color: var(--main-text);
   display: block;
   margin-top: 4px;
 }
@@ -208,7 +220,7 @@ a:hover {
 
 .modal-content button {
   padding: 0.5rem 1rem;
-  background: var(--accent-color);
+  background: var(--hover-color);
   color: white;
   border: none;
   border-radius: 6px;
@@ -234,7 +246,7 @@ a:hover {
   left: 50%;
   transform: translateX(-50%);
   background: var(--tile-bg);
-  color: #333;
+  color: var(--main-text);
   padding: 1rem 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -249,7 +261,7 @@ a:hover {
   right: 0.5rem;
   cursor: pointer;
   font-size: 1.2rem;
-  color: #666;
+  color: var(--main-text);
 }
 
 /* Hamburger */
@@ -257,17 +269,27 @@ a:hover {
   display: none;
   font-size: 1.5rem;
   cursor: pointer;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.25rem;
 }
 
 /* --- Responsive --- */
 @media (max-width: 768px) {
   .layout {
     grid-template-columns: 1fr;
+    height: 90vh;
   }
   .left-col,
   .right-col {
     border: none;
+  }
+  .left-col {
+    position: sticky;
+    padding: 0 0.5rem;
+  }
+  .right-col {
+    position: sticky;
+    margin-bottom: 10px;
+    padding: 0 0.25rem;
   }
   .left-col .nav-links,
   .left-col .socials,
