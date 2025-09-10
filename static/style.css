@@ -148,7 +148,6 @@ a:hover {
 }
 
 .about-tile,
-.cert-tile,
 .shortcuts-tile {
   background: var(--tile-bg);
   padding: 1rem;
@@ -294,7 +293,6 @@ a:hover {
   .left-col .nav-links,
   .left-col .socials,
   .right-col .about-tile,
-  .right-col .cert-tile,
   .right-col .shortcuts-tile {
     display: none;
   }
@@ -306,7 +304,6 @@ a:hover {
     display: block;
   }
   .right-col.expanded .about-tile,
-  .right-col.expanded .cert-tile,
   .right-col.expanded .shortcuts-tile {
     display: block;
   }
