@@ -202,9 +202,13 @@ a:hover {
   padding: 1.5rem;
   border-radius: 10px;
   width: 90%;
-  max-width: 400px;
+  max-width: 800px;
   position: relative;
   text-align: center;
+}
+
+.modal-pic {
+  width: 90%;
 }
 
 .modal-content input,
