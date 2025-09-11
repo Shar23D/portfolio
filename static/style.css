@@ -1,12 +1,17 @@
 :root {
-  --primary-bg: rgb(251, 221, 226);
-  --secondary-color: rgb(251, 194, 204);
-  --left-bg: #f0eaf5;
-  --right-bg: #f0eaf5;
-  --tile-bg: #fff1f1;
-  --hover-color: #b052d5;
-  --modal-border: #ddd;
-  --main-text: #333;
+  /* Pinks */
+  --primary-bg: #fbe2eb;
+  --secondary-color: #f8a7b6;
+  --tile-bg: #f9dce3;
+
+  /* Accents */
+  --left-bg: #e8edf8;
+  --right-bg: #e2f4ea;
+  --hover-color: #692bae;
+
+  /* Neutrals */
+  --modal-border: #ccc;
+  --main-text: #222;
 }
 
 /* HEADER */
@@ -114,7 +119,7 @@ body {
 
 .project-tile {
   max-width: 70%;
-  margin: 15px auto;
+  margin: 25px auto;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -124,7 +129,7 @@ body {
 }
 
 .project-tile:hover {
-  transform: translateY(-6px) scale(1.05);
+  transform: scale(1.05);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
 }
 
@@ -173,12 +178,16 @@ a:hover {
   color: var(--hover-color);
   box-shadow: 0 0 0 6px var(--left-bg);
 }
+.about-tile h2,
+.shortcuts-tile h2 {
+  padding: 0;
+  margin: 0 0 1rem 0;
+}
 .about-tile h2 span {
   font-size: 12px;
   font-weight: normal;
   color: var(--main-text);
   display: block;
-  margin-top: 4px;
 }
 
 /* MODALS */
