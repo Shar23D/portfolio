@@ -1,9 +1,10 @@
 :root {
   --primary-bg: rgb(251, 221, 226);
+  --secondary-color: rgb(251, 194, 204);
   --left-bg: #f0eaf5;
-  --right-bg: #fdfcff;
-  --tile-bg: #ffffff;
-  --hover-color: #ceacdc;
+  --right-bg: #f0eaf5;
+  --tile-bg: #fff1f1;
+  --hover-color: #b052d5;
   --modal-border: #ddd;
   --main-text: #333;
 }
@@ -16,7 +17,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 3fr 1fr 4fr;
-  background: var(--hover-color);
+  background: var(--secondary-color);
   color: white;
   padding: 0.5rem 1rem;
   z-index: 1000;
@@ -61,6 +62,7 @@ body {
   height: calc(100vh - 80px - 3rem); /* subtract header + top/bottom margins */
   overflow: hidden;
   gap: 10px;
+  margin-bottom: 6vh;
 }
 
 /* COLUMNS */
@@ -85,7 +87,7 @@ body {
 
 /* MIDDLE COLUMN */
 .middle-col {
-  background: var(--hover-color);
+  background: var(--primary-color);
   scroll-behavior: smooth;
   margin: 0 auto;
   width: 55vw;
@@ -155,21 +157,21 @@ a {
 }
 a:hover {
   color: var(--hover-color);
-  transform: translateX(3px);
 }
 
-/* ABOUT ITEMS */
-.about-item {
+/* ABOUT ITEMS */ /* SHORTCUT TILES LI*/
+.about-item,
+.shortcuts-tile li {
   cursor: pointer;
   margin: 0.5rem 0;
-  padding: 0.25rem 0.5rem;
   border-radius: 5px;
   transition: background 0.2s, color 0.2s, transform 0.2s;
 }
-.about-item:hover {
+.about-item:hover,
+.shortcuts-tile li:hover {
   background: var(--left-bg);
   color: var(--hover-color);
-  transform: translateX(5px);
+  box-shadow: 0 0 0 6px var(--left-bg);
 }
 .about-tile h2 span {
   font-size: 12px;
@@ -316,16 +318,28 @@ a:hover {
     font-size: 14px;
   }
   .left-col .nav-links,
-  .left-col .socials,
   .right-col .about-tile,
   .right-col .shortcuts-tile {
     display: none;
   }
+  .left-col .nav-links {
+    margin-left: 25px;
+  }
+  .right-col {
+    position: relative;
+  }
+  .right-col .about-tile,
+  .right-col .shortcuts-tile {
+    width: 90%;
+    margin: auto;
+  }
   .hamburger {
     display: block;
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
   .left-col.expanded .nav-links,
-  .left-col.expanded .socials,
   .right-col.expanded .about-tile,
   .right-col.expanded .shortcuts-tile {
     display: block;

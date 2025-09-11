@@ -60,7 +60,10 @@
           id="space-journal"
           target="_blank"
         >
-          <img src="./static/images/journal.png" alt="space-journal" />
+          <img
+            src="./static/images/project-img/journal.png"
+            alt="space-journal"
+          />
           <h3>Space Journal</h3>
           <p>A playful journaling experience to let go of your thoughts</p>
           <p>HTML, CSS, JS</p>
@@ -72,7 +75,10 @@
           id="antiknight-sudoku"
           target="_blank"
         >
-          <img src="./static/images/sudoku.png" alt="antiknight sudoku" />
+          <img
+            src="./static/images/project-img/sudoku.png"
+            alt="antiknight sudoku"
+          />
           <h3>Anti-Knight Sudoku</h3>
           <p>Classic sudoku with a twist: chess knight move restriction</p>
           <p>HTML, CSS, JS</p>
@@ -84,7 +90,10 @@
           id="sudoku-react"
           target="_blank"
         >
-          <img src="./static/images/sudoku-react.png" alt="sudoku-react" />
+          <img
+            src="./static/images/project-img/sudoku-react.png"
+            alt="sudoku-react"
+          />
           <h3>Classic sudoku</h3>
           <p>Classic sudoku with React and Dosuku api</p>
           <p>HTML, CSS, JS, React</p>
@@ -97,7 +106,7 @@
           target="_blank"
         >
           <img
-            src="./static/images/homi-haven.png"
+            src="./static/images/project-img/homi-haven.png"
             alt="salesforce-property-site"
           />
           <h3>Salesforce Rental Site</h3>
@@ -113,16 +122,17 @@
         <section class="about-tile" id="about">
           <h2>About Me <span>Click to learn more</span></h2>
           <ul>
-            <li class="about-item" data-modal="bio">Biology BS</li>
+            <!-- <li class="about-item" data-modal="bio">Cell Biology BS</li> -->
             <li class="about-item" data-modal="learner">Lifelong Learner</li>
-            <li class="about-item" data-modal="puzzle">Puzzle Solver</li>
-            <li class="about-item" data-modal="cube">Rubik's Cube Collector</li>
+            <li class="about-item" data-modal="rubik">
+              Rubik's Cube Collector and Cuber
+            </li>
             <li class="about-item" data-modal="reader">Avid Reader</li>
           </ul>
         </section>
 
         <section class="shortcuts-tile">
-          <h2>Shortcuts</h2>
+          <h2>Projects</h2>
           <ul>
             <li>
               <a href="#space-journal">Space Journal</a>
@@ -184,19 +194,25 @@
       <p id="popup-text"></p>
     </div>
     <!-- About Modals -->
-    <div class="about-modal" id="bio-modal">
+    <!-- <div class="about-modal" id="bio-modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h3>Biology BS 🎓</h3>
-        <img class="modal-pic" src="./static/images/grad.png" alt="Graduation Picture" />
+        <h3>Cell Biology BS 🎓</h3>
+        <img
+          class="modal-pic"
+          src="./static/images/about-img/UCD.png"
+          alt="UC Davis Logo"
+        />
+        <p>I graduated from UC Davis with a B.S. in Cell Biology</p>
       </div>
-    </div>
+    </div> -->
 
     <div class="about-modal" id="learner-modal">
       <div class="modal-content">
         <span class="close">&times;</span>
         <h3>Lifelong Learner 📚</h3>
         <ul>
+          <li><i>UC Davis: Cell Biology B.S.</i></li>
           <li>Duke University: Introductory C Programming Specialization</li>
           <li>Google Data Analytics Specialization</li>
           <li>Meta Full-Stack Engineer Certificate</li>
@@ -208,9 +224,35 @@
     <div class="about-modal" id="reader-modal">
       <div class="modal-content">
         <span class="close">&times;</span>
-        <h3>Books read over time</h3>
-        <img class="modal-pic" src="./static/images/books-read.png" alt="Books read graph" />
-        <p>My favorite book is ...</p>
+        <h3>Book pages read over time</h3>
+        <img
+          class="modal-pic"
+          src="./static/images/about-img/books-read.png"
+          alt="Books read graph"
+        />
+        <!-- <p>My favorite book is ...</p>
+        <img
+          class="modal-pic"
+          src="./static/images/about-img/fav-book.png"
+          alt="My favorite book"
+        /> -->
+      </div>
+    </div>
+    <div class="about-modal" id="rubik-modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+        <h3>My Rubik's Cubes Collection</h3>
+        <img
+          class="modal-pic"
+          src="./static/images/about-img/rubiks.png"
+          alt="Rubik's Cubes Collection"
+        />
+        <p>My favorite cube is Axis Cube - a 3x3x3 mod</p>
+        <img
+          class="modal-pic"
+          src="./static/images/about-img/axis-cube.png"
+          alt="Axis cube"
+        />
       </div>
     </div>
 
