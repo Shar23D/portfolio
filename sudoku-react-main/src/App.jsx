@@ -7,6 +7,7 @@ import NumberPad from "./components/NumberPad";
 import { findViolations } from "./utils/validation";
 import { useEffect } from "react";
 import { fetchPuzzle } from "./fetch-puzzle";
+import FloatingIcon from "./components/FloatingIcon";
 
 function App() {
   const [board, setBoard] = useState(
@@ -522,6 +523,7 @@ function App() {
         onClose={() => setShowDifficultyModal(false)}
         onSelectDifficulty={handleDifficultySelect}
       />
+      <FloatingIcon />
     </div>
   );
 }
