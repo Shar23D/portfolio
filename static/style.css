@@ -1,13 +1,13 @@
 :root {
-  /* Pinks */
-  --primary-bg: #fbe2eb;
-  --secondary-color: #f8a7b6;
-  --tile-bg: #f9dce3;
+  /* Main */
+  --primary-bg: #faedcd;
+  --secondary-color: #d4a373;
+  --tile-bg: #fefae0;
 
   /* Accents */
-  --left-bg: #e8edf8;
-  --right-bg: #e2f4ea;
-  --hover-color: #692bae;
+  --left-bg: #e9edc9;
+  --right-bg: #e9edc9;
+  --hover-color: #606c38;
 
   /* Neutrals */
   --modal-border: #ccc;
