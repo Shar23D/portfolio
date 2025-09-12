@@ -12,7 +12,7 @@ const FloatingIcon = () => {
         className="floating-icon"
         aria-describedby="homeTooltip"
       >
-        <img src="/assets/favicon.ico" alt="Portfolio Home" />
+        <img src="/assets/floating-icon.jpeg" alt="Portfolio Home" />
       </a>
       <div role="tooltip" id="homeTooltip" className="floating-tooltip">
         Explore more projects
