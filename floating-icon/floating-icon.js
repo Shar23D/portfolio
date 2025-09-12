@@ -2,7 +2,7 @@
 (function () {
   const iconHTML = `
     <a href="../index.html" class="floating-icon" aria-describedby="homeTooltip">
-      <img src="../static/images/favicon.ico" alt="Portfolio Home" />
+      <img src="./floating-icon.jpeg" alt="Portfolio Home" />
     </a>
     <div role="tooltip" id="homeTooltip" class="floating-tooltip">
       Explore more projects
