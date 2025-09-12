@@ -137,6 +137,7 @@ body {
   width: 40%;
   max-width: 400px;
   border-radius: 6px;
+  object-fit: cover;
   height: auto;
 }
 .project-tile h3 {
