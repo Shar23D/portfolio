@@ -79,8 +79,13 @@ const App = () => {
   }
 
   return (
+    
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
+      <div className="bg-red-500 text-white p-4">
+  Tailwind is working!
+</div>
+
       <div className="bg-white shadow-sm border-b">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
