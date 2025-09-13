@@ -23,9 +23,9 @@ export default defineConfig({
   ],
 })
 ```
-
 - Import Tailwind CSS in your css file:
-`@import "tailwindcss";`
-
+```
+@import "tailwindcss";
+```
 Start your build process
 `npm run dev`
