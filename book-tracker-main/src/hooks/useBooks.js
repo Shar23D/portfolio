@@ -1,124 +1,196 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
+import { supabase } from "../supabaseClient";
 
 export const useBooks = () => {
   const [books, setBooks] = useState([]);
   const [tags, setTags] = useState([]);
+  const [user, setUser] = useState(null);
 
-  // Load data from localStorage on mount
+  // Listen to auth changes
   useEffect(() => {
-    const savedBooks = localStorage.getItem("bookTracker_books");
-    const savedTags = localStorage.getItem("bookTracker_tags");
+    supabase.auth.getUser().then(({ data }) => setUser(data.user));
 
-    if (savedBooks) {
-      setBooks(JSON.parse(savedBooks));
-    }
-    if (savedTags) {
-      setTags(JSON.parse(savedTags));
-    }
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      setUser(session?.user || null);
+    });
+
+    return () => listener.subscription.unsubscribe();
   }, []);
 
-  // Save to localStorage whenever books or tags change
-  useEffect(() => {
-    localStorage.setItem("bookTracker_books", JSON.stringify(books));
-  }, [books]);
+  // Fetch books whenever user logs in
+  const fetchBooks = useCallback(async () => {
+    if (!user) return;
 
-  useEffect(() => {
-    localStorage.setItem("bookTracker_tags", JSON.stringify(tags));
-  }, [tags]);
+    const { data, error } = await supabase
+      .from("books")
+      .select("*")
+      .eq("user_id", user.id)
+      .order("inserted_at", { ascending: false });
 
-  // Clean up unused tags whenever books change
-  useEffect(() => {
-    if (books.length === 0) {
-      setTags([]);
+    if (error) {
+      console.error("Error fetching books:", error);
       return;
     }
 
-    // Get all tags currently used by books
+    setBooks(data);
+    extractTags(data);
+  }, [user]);
+
+  useEffect(() => {
+    if (user) fetchBooks();
+    else {
+      setBooks([]);
+      setTags([]);
+    }
+  }, [user, fetchBooks]);
+
+  const extractTags = (booksList) => {
     const usedTags = new Set();
-    books.forEach((book) => {
-      if (book.tags && book.tags.length > 0) {
+    booksList.forEach((book) => {
+      if (book.tags?.length > 0) {
         book.tags.forEach((tag) => usedTags.add(tag));
       }
     });
+    setTags(Array.from(usedTags).sort());
+  };
 
-    // Filter out unused tags
-    const activeTags = tags.filter((tag) => usedTags.has(tag));
-    if (activeTags.length !== tags.length) {
-      setTags(activeTags.sort());
-    }
-  }, [books]); // Only depend on books, not tags to avoid infinite loops
-
-  const addBook = (newBook) => {
+  const addBook = async (newBook) => {
+    if (!user) return false;
     if (!newBook.title.trim() || !newBook.author.trim()) {
       alert("Title and author are required!");
       return false;
     }
 
     // Check for duplicates
-    const duplicate = books.find(
-      (book) =>
-        book.title.toLowerCase() === newBook.title.toLowerCase() &&
-        book.author.toLowerCase() === newBook.author.toLowerCase()
-    );
+    const { data: dupCheck } = await supabase
+      .from("books")
+      .select("*")
+      .eq("user_id", user.id)
+      .eq("title", newBook.title)
+      .eq("author", newBook.author);
 
-    if (duplicate) {
+    if (dupCheck?.length > 0) {
       alert("This book already exists in your library!");
       return false;
     }
 
-    const bookToAdd = {
-      ...newBook,
-      id: Date.now(),
-      pages: newBook.pages ? parseInt(newBook.pages) : 0,
-      rating: newBook.rating ? parseFloat(newBook.rating) : 0,
-      spiceRating: newBook.spiceRating ? parseFloat(newBook.spiceRating) : 0,
-      dateAdded: new Date().toISOString(),
-      readingDates: newBook.readingDates || [],
+    const bookToInsert = {
+      user_id: user.id,
+      title: newBook.title,
+      author: newBook.author,
+      pages: newBook.pages ? Number(newBook.pages) : null,
+      rating: newBook.rating ? Number(newBook.rating) : null,
+      spiceRating: newBook.spiceRating ? Number(newBook.spiceRating) : null,
+      form: newBook.form || "ebook",
+      shelf: newBook.shelf || "to-read",
+      note: newBook.note || "",
+      tags: newBook.tags?.length > 0 ? newBook.tags : [],
+      readingDates: newBook.readingDates && newBook.readingDates.length > 0
+        ? newBook.readingDates
+        : []
     };
 
-    setBooks((prevBooks) => [...prevBooks, bookToAdd]);
+    const { data, error } = await supabase
+      .from("books")
+      .insert([bookToInsert])
+      .select();
 
-    // Add new tags to the tags list
-    const newTags = newBook.tags.filter((tag) => !tags.includes(tag));
-    if (newTags.length > 0) {
-      setTags((prevTags) => [...prevTags, ...newTags].sort());
+    if (error) {
+      console.error("Error adding book:", error);
+      alert("Failed to add book. Check console for details.");
+      return false;
     }
 
+    setBooks((prev) => [data[0], ...prev]);
+    extractTags([data[0], ...books]);
     return true;
   };
 
-  const updateBook = (updatedBook) => {
-    setBooks((prevBooks) =>
-      prevBooks.map((book) => (book.id === updatedBook.id ? updatedBook : book))
+  const updateBook = async (updatedBook) => {
+    if (!user) return false;
+
+    const { data, error } = await supabase
+      .from("books")
+      .update({
+        title: updatedBook.title,
+        author: updatedBook.author,
+        pages: updatedBook.pages ? Number(updatedBook.pages) : null,
+        rating: updatedBook.rating ? Number(updatedBook.rating) : null,
+        spiceRating: updatedBook.spiceRating ? Number(updatedBook.spiceRating) : null,
+        form: updatedBook.form || "ebook",
+        shelf: updatedBook.shelf || "to-read",
+        note: updatedBook.note || "",
+        tags: updatedBook.tags?.length > 0 ? updatedBook.tags : [],
+        readingDates: updatedBook.readingDates && updatedBook.readingDates.length > 0
+          ? updatedBook.readingDates
+          : []
+
+      })
+      .eq("id", updatedBook.id)
+      .eq("user_id", user.id)
+      .select();
+
+    if (error) {
+      console.error("Error updating book:", error);
+      return false;
+    }
+
+    setBooks((prev) =>
+      prev.map((b) => (b.id === updatedBook.id ? data[0] : b))
     );
-
-    // Add any new tags
-    const newTags = updatedBook.tags.filter((tag) => !tags.includes(tag));
-    if (newTags.length > 0) {
-      setTags((prevTags) => [...prevTags, ...newTags].sort());
-    }
+    extractTags([...books.map((b) => (b.id === updatedBook.id ? data[0] : b))]);
+    return true;
   };
 
-  const deleteBook = (bookId) => {
-    if (window.confirm("Are you sure you want to delete this book?")) {
-      setBooks((prevBooks) => prevBooks.filter((book) => book.id !== bookId));
+  const deleteBook = async (bookId) => {
+    if (!user) return;
+
+    if (!window.confirm("Are you sure you want to delete this book?")) return;
+
+    const { error } = await supabase
+      .from("books")
+      .delete()
+      .eq("id", bookId)
+      .eq("user_id", user.id);
+
+    if (error) {
+      console.error("Error deleting book:", error);
+      return;
     }
+
+    const updatedBooks = books.filter((b) => b.id !== bookId);
+    setBooks(updatedBooks);
+    extractTags(updatedBooks);
   };
 
-  const moveToShelf = (bookId, newShelf) => {
-    setBooks((prevBooks) =>
-      prevBooks.map((book) =>
-        book.id === bookId ? { ...book, shelf: newShelf } : book
-      )
+  const moveToShelf = async (bookId, newShelf) => {
+    if (!user) return;
+
+    const { data, error } = await supabase
+      .from("books")
+      .update({ shelf: newShelf })
+      .eq("id", bookId)
+      .eq("user_id", user.id)
+      .select();
+
+    if (error) {
+      console.error("Error moving book:", error);
+      return;
+    }
+
+    setBooks((prev) =>
+      prev.map((b) => (b.id === bookId ? data[0] : b))
     );
   };
 
   return {
+    user,
     books,
     tags,
     addBook,
     updateBook,
     deleteBook,
     moveToShelf,
+    fetchBooks,
   };
 };

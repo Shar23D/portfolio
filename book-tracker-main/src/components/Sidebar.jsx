@@ -32,11 +32,10 @@ const Sidebar = ({
               <button
                 key={shelf.id}
                 onClick={() => setCurrentShelf(shelf.id)}
-                className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-colors ${
-                  currentShelf === shelf.id
+                className={`w-full flex items-center justify-between p-3 rounded-lg text-left transition-colors ${currentShelf === shelf.id
                     ? "bg-blue-100 text-blue-900"
                     : "hover:bg-gray-100"
-                }`}
+                  }`}
               >
                 <div className="flex items-center space-x-3">
                   <Icon size={20} />

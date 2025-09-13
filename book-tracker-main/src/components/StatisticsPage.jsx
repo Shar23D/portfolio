@@ -88,11 +88,10 @@ const StatisticsPage = ({ books, onBack }) => {
                   onClick={() =>
                     setStatsView({ ...statsView, monthly: "books" })
                   }
-                  className={`px-3 py-1 text-sm rounded ${
-                    statsView.monthly === "books"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                  className={`px-3 py-1 text-sm rounded ${statsView.monthly === "books"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                 >
                   Books
                 </button>
@@ -100,11 +99,10 @@ const StatisticsPage = ({ books, onBack }) => {
                   onClick={() =>
                     setStatsView({ ...statsView, monthly: "pages" })
                   }
-                  className={`px-3 py-1 text-sm rounded ${
-                    statsView.monthly === "pages"
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                  className={`px-3 py-1 text-sm rounded ${statsView.monthly === "pages"
+                    ? "bg-blue-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                 >
                   Pages
                 </button>
@@ -135,11 +133,10 @@ const StatisticsPage = ({ books, onBack }) => {
                   onClick={() =>
                     setStatsView({ ...statsView, yearly: "books" })
                   }
-                  className={`px-3 py-1 text-sm rounded ${
-                    statsView.yearly === "books"
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                  className={`px-3 py-1 text-sm rounded ${statsView.yearly === "books"
+                    ? "bg-green-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                 >
                   Books
                 </button>
@@ -147,11 +144,10 @@ const StatisticsPage = ({ books, onBack }) => {
                   onClick={() =>
                     setStatsView({ ...statsView, yearly: "pages" })
                   }
-                  className={`px-3 py-1 text-sm rounded ${
-                    statsView.yearly === "pages"
-                      ? "bg-green-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                  className={`px-3 py-1 text-sm rounded ${statsView.yearly === "pages"
+                    ? "bg-green-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                 >
                   Pages
                 </button>
@@ -179,11 +175,10 @@ const StatisticsPage = ({ books, onBack }) => {
                   onClick={() =>
                     setStatsView({ ...statsView, format: "monthly" })
                   }
-                  className={`px-3 py-1 text-sm rounded ${
-                    statsView.format === "monthly"
-                      ? "bg-purple-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                  className={`px-3 py-1 text-sm rounded ${statsView.format === "monthly"
+                    ? "bg-purple-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                 >
                   Monthly
                 </button>
@@ -191,11 +186,10 @@ const StatisticsPage = ({ books, onBack }) => {
                   onClick={() =>
                     setStatsView({ ...statsView, format: "yearly" })
                   }
-                  className={`px-3 py-1 text-sm rounded ${
-                    statsView.format === "yearly"
-                      ? "bg-purple-600 text-white"
-                      : "bg-gray-200 text-gray-700 hover:bg-gray-300"
-                  }`}
+                  className={`px-3 py-1 text-sm rounded ${statsView.format === "yearly"
+                    ? "bg-purple-600 text-white"
+                    : "bg-gray-200 text-gray-700 hover:bg-gray-300"
+                    }`}
                 >
                   Yearly
                 </button>
@@ -246,7 +240,7 @@ const StatisticsPage = ({ books, onBack }) => {
                       key={`cell-${index}`}
                       fill={
                         ["#3B82F6", "#10B981", "#8B5CF6", "#F59E0B", "#EF4444"][
-                          index % 5
+                        index % 5
                         ]
                       }
                     />
