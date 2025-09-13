@@ -19,7 +19,7 @@
 `export default defineConfig({`
 `  plugins: [`
     `tailwindcss(),`
-`  ],`
+    `  ],`
 `})`
 
 - Import Tailwind CSS in your css file:
