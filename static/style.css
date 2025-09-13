@@ -18,24 +18,33 @@
   --dark-hover-color: #83bca9;
   --dark-modal-border: #9f93c7;
   --dark-main-text: #ddd;
-  
-  color-scheme: light dark;
+}
+
+.dark-mode {
+  --light-primary-bg: var(--dark-primary-bg);
+  --light-secondary-color: var(--dark-secondary-color);
+  --light-tile-bg: var(--dark-tile-bg);
+  --light-left-bg: var(--dark-left-bg);
+  --light-right-bg: var(--dark-right-bg);
+  --light-hover-color: var(--dark-hover-color);
+  --light-modal-border: var(--dark-modal-border);
+  --light-main-text: var(--dark-main-text);
 }
 
 /* HEADER */
 .site-header {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
   display: grid;
   grid-template-columns: 3fr 1fr 4fr;
-  background: var(--light-secondary-color);
-  color: white;
-  padding: 0.5rem 1rem;
-  z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
   align-items: center;
+  background: var(--light-secondary-color);
+  padding: 0.5rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  z-index: 1000;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  color: white;
 }
 
 .site-header h1,
@@ -52,11 +61,21 @@
   text-align: center;
 }
 
+.header-toggle {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 20px;
+}
+
 #light-dark-btn {
   background-color: var(--light-primary-bg);
-  width: 50px;
+  width: 60px;
   height: 30px;
   border-radius: 15px;
+  cursor: pointer;
+  position: relative;
+  transition: background-color 0.3s;
 }
 
 #circle-switch {
@@ -64,7 +83,16 @@
   width: 25px;
   height: 25px;
   border-radius: 50%;
-  margin: 2px 2px;
+  margin: 2.5px;
+  transition: transform 0.3s, margin-left 0.3s, background-color 0.3s;
+}
+
+#circle-switch:hover {
+  transform: scale(1.1);
+}
+
+.dark-mode #circle-switch {
+  margin-left: 31px;
 }
 
 /* BASE LAYOUT */
@@ -195,6 +223,7 @@ a:hover {
   margin: 0.5rem 0;
   border-radius: 5px;
   transition: background 0.2s, color 0.2s, transform 0.2s;
+  color: var(--light-main-text);
 }
 .about-item:hover,
 .shortcuts-tile li:hover {
@@ -206,11 +235,11 @@ a:hover {
 .shortcuts-tile h2 {
   padding: 0;
   margin: 0 0 1rem 0;
+  color: var(--light-main-text);
 }
 .about-tile h2 span {
   font-size: 12px;
   font-weight: normal;
-  color: var(--light-main-text);
   display: block;
 }
 
@@ -381,13 +410,27 @@ a:hover {
     display: block;
   }
   .site-header {
-    grid-template-columns: 1fr;
+    grid-template-columns: 1fr 100px;
     padding: 0.5rem;
   }
   .site-header h1 {
     text-align: center;
+    margin-left: 80px;
+    font-size: 24px;
   }
   .site-header h2 {
     display: none;
+  }
+  #light-dark-btn {
+    width: 35px;
+    height: 20px;
+    border-radius: 15px;
+  }
+  #circle-switch {
+    width: 15px;
+    height: 15px;
+  }
+  .dark-mode #circle-switch {
+    margin-left: 18px;
   }
 }
