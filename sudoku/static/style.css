@@ -1,23 +1,55 @@
-/* 
-Variables
- */
+/* Variables */
 :root {
-  --given: #d5d8c8;
+  --given: #eff6e0;
   --selected: #fff9bd;
   --hinted: #e7efc7;
   --win: #dee791;
   --highlight: #dff6aa;
   --error: #ffcdd2;
-  --primary: #0a400c;
-  --secondary: #eeefe0;
+  --primary: #fbf8cc;
+  --secondary: #ffc18b;
+  --main-bg: #fde4cf;
   --main-border: #748873;
-  --button-border: ;
   --button: #d3ebe1;
+  --text: #183a37;
+  --light-btn: #d9ed92;
+  --light-btn-circle: #fbf8cc;
+
+  /* Dark theme */
+  --dark-given: #10091f;
+  --dark-selected: #000642;
+  --dark-hinted: #181038;
+  --dark-win: #21186e;
+  --dark-highlight: #200955;
+  --dark-error: #9a000f;
+  --dark-primary: #040733;
+  --dark-secondary: #003e74;
+  --dark-main-bg: #021b30;
+  --dark-main-border: #8b778c;
+  --dark-button: #2c141e;
+  --dark-text: #e7c5c8;
+  --dark-btn: #362967;
+  --dark-btn-cirle: #040733;
+}
+/* Dark Mode */
+.dark-mode {
+  --light-btn: var(--dark-btn);
+  --light-btn-circle: var(--dark-btn-circle);
+  --given: var(--dark-given);
+  --selected: var(--dark-selected);
+  --hinted: var(--dark-hinted);
+  --win: var(--dark-win);
+  --highlight: var(--dark-highlight);
+  --error: var(--dark-error);
+  --primary: var(--dark-primary);
+  --secondary: var(--dark-secondary);
+  --main-bg: var(--dark-main-bg);
+  --main-border: var(--dark-main-border);
+  --button: var(--dark-button);
+  --text: var(--dark-text);
 }
 
-/* 
-   Base Styles
- */
+/* Base Styles */
 body {
   display: grid;
   justify-items: center;
@@ -25,12 +57,12 @@ body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 20px;
-  background-color: var(--secondary);
+  background-color: var(--primary);
   color: black;
 }
 
 main {
-  background: white;
+  background: var(--main-bg);
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 4px 6px var(--secondary);
@@ -38,19 +70,17 @@ main {
 
 h1 {
   text-align: center;
-  color: var(--primary);
+  color: var(--text);
   margin-bottom: 1rem;
   margin-top: auto;
 }
 
 p {
   text-align: center;
-  color: var(--primary);
+  color: var(--text);
 }
 
-/* 
-   Stats Bar
- */
+/* Stats Bar */
 .stats {
   display: flex;
   justify-content: space-between;
@@ -71,17 +101,15 @@ p {
 
 .stat-label {
   font-size: 14px;
-  color: var(--primary);
+  color: var(--text);
 }
 
 .stat-value {
   font-size: 18px;
-  color: var(--primary);
+  color: var(--text);
 }
 
-/* 
-   Sudoku Board
- */
+/* Sudoku Board */
 #board {
   display: grid;
   width: 458px;
@@ -93,10 +121,11 @@ p {
   border-radius: 0.5rem;
   margin: 1rem auto;
   padding: px;
+  max-height: 100vh;
 }
 
 .cell {
-  background: white;
+  background: var(--main-bg);
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -105,6 +134,7 @@ p {
   font-weight: bold;
   cursor: pointer;
   user-select: none;
+  color: var(--text)
 }
 
 .cell.note {
@@ -122,16 +152,14 @@ p {
   margin: 0 2px;
 }
 
-/* 
-   Cell States
- */
+/* Cell States */
 .cell:hover {
   background: var(--secondary);
 }
 
 .cell.given {
   background: var(--given);
-  color: var(--primary);
+  color: var(--text);
   font-weight: bold;
   cursor: default;
 }
@@ -147,6 +175,7 @@ p {
 }
 .cell.error {
   background: var(--error);
+  color: var(--text);
 }
 
 .error.selected {
@@ -161,9 +190,7 @@ p {
   animation-iteration-count: infinite;
 }
 
-/* 
-   3x3 Grid Borders
- */
+/* 3x3 Grid Borders */
 .cell:nth-child(3n):not(:nth-child(9n)) {
   border-right: 2px solid var(--main-border);
 }
@@ -173,9 +200,7 @@ p {
   border-bottom: 2px solid var(--main-border);
 }
 
-/* 
-   Menu & Buttons
- */
+/* Menu & Buttons */
 .menu {
   display: flex;
   justify-content: center;
@@ -189,8 +214,9 @@ p {
   padding: 0.75rem 1.5rem;
   font-size: 16px;
   cursor: pointer;
-  background-color: white;
+  background-color: var(--button);
   transition: background-color 0.2s;
+  color: var(--text);
 }
 
 .button:hover {
@@ -218,11 +244,12 @@ p {
   height: 40px;
   border: 2px solid var(--secondary);
   border-radius: 0.5rem;
-  background: white;
+  background: var(--button);
   font-size: 18px;
   font-weight: bold;
   cursor: pointer;
   transition: background-color 0.2s;
+  color: var(--text);
 }
 
 .number-btn:hover {
@@ -236,15 +263,14 @@ p {
   font-size: 12px;
 }
 
-/* 
-   Status
- */
+/* Status */
 .status {
   text-align: center;
   margin-top: 1rem;
   font-size: 18px;
   font-weight: bold;
   background-color: var(--secondary);
+  color: var(--text);
 }
 
 .status.win {
@@ -252,25 +278,7 @@ p {
   font-size: 24px;
 }
 
-/* 
-   Footer
- */
-footer {
-  margin-top: 1rem;
-  text-align: center;
-  color: var(--primary);
-  position: relative;
-  bottom: 0;
-}
-
-footer a {
-  text-decoration: none;
-  color: var(--main-border);
-}
-
-/* 
-   Popup Overlay
- */
+/* Popup Overlay */
 .popup-overlay {
   position: fixed;
   top: 0;
@@ -285,7 +293,7 @@ footer a {
 }
 
 .popup {
-  background: white;
+  background: var(--main-bg);
   padding: 2rem;
   border-radius: 1rem;
   box-shadow: 0 4px 20px var(--secondary);
@@ -296,7 +304,7 @@ footer a {
 
 .popup h2 {
   margin-top: 0;
-  color: var(--primary);
+  color: var(--text);
 }
 
 .close-btn {
@@ -307,7 +315,7 @@ footer a {
   border: none;
   font-size: 24px;
   cursor: pointer;
-  color: var(--primary);
+  color: var(--text);
   width: 30px;
   height: 30px;
   display: flex;
@@ -319,12 +327,10 @@ footer a {
 
 .close-btn:hover {
   background: var(--secondary);
-  color: var(--primary);
+  color: var(--text);
 }
 
-/* 
-   Level Buttons
- */
+/* Level Buttons */
 .level-buttons {
   display: flex;
   flex-direction: column;
@@ -336,10 +342,11 @@ footer a {
   padding: 1rem;
   border: 2px solid var(--secondary);
   border-radius: 0.5rem;
-  background: white;
+  background: var(--button);
   font-size: 16px;
   cursor: pointer;
   transition: all 0.2s;
+  color: var(--text);
 }
 
 .level-btn:hover {
@@ -347,9 +354,7 @@ footer a {
   transform: translateY(-1px);
 }
 
-/* 
-   Animations
- */
+/* Animations */
 @keyframes winDisplay {
   0% {
     background-color: var(--highlight);
@@ -365,9 +370,12 @@ footer a {
   }
 }
 
-/* 
-   Responsive
- */
+/* Responsive */
+@media (max-width: 780px) {
+ main {
+    margin-top: 1rem ;
+  }
+}
 @media (max-width: 600px) {
   .stats {
     flex-direction: column;

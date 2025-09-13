@@ -1,10 +1,3 @@
-// Light/dark mode toggle
-const toggle = document.getElementById("light-dark-btn");
-
-  toggle.addEventListener("click", () => {
-    document.body.classList.toggle("dark-mode");
-  });
-
 // Hamburger toggles
 document.querySelector(".left-hamburger").addEventListener("click", () => {
   document.querySelector(".left-col").classList.toggle("expanded");

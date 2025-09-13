@@ -8,10 +8,18 @@
     <link rel="stylesheet" href="static/style.css" />
     <link rel="stylesheet" href="../floating-icon/floatin-icon.css" />
     <script src="../floating-icon/floating-icon.js" defer></script>
+    <link rel="stylesheet" href="../light-dark-toggle/light-dark.css" />
+    <script src="../light-dark-toggle/light-dark.js" defer></script>
   </head>
 
   <body>
     <main>
+      <div class="header-toggle">
+        <div id="light-dark-btn">
+          <div id="circle-switch"></div>
+        </div>
+      </div>
+
       <h1>Anti-Knight Sudoku</h1>
       <p>
         The rule is simple: classic sudoku with a chess knight move restriction
@@ -61,10 +69,6 @@
         <div class="status" id="status"></div>
       </div>
     </main>
-    <footer>
-      <a href="https://shar23d.github.io/portfolio/">Sharon Dang</a> 2025
-    </footer>
-
     <!-- Level Selection Popup -->
     <div id="levelPopup" class="popup-overlay" style="display: none">
       <div class="popup">
