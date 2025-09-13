@@ -33,8 +33,6 @@
 }
 /* Dark Mode */
 .dark-mode {
-  --light-btn: var(--dark-btn);
-  --light-btn-circle: var(--dark-btn-circle);
   --given: var(--dark-given);
   --selected: var(--dark-selected);
   --hinted: var(--dark-hinted);

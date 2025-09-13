@@ -1,7 +1,8 @@
-/* .dark-mode {
+.dark-mode {
+  --light-btn: var(--dark-btn);
+  --light-btn-circle: var(--dark-btn-circle);
+}
 
-} */
- 
 .header-toggle {
   display: flex;
   justify-content: flex-end;
@@ -44,7 +45,7 @@
   .header-toggle {
     margin: 10px;
   }
-   #light-dark-btn {
+  #light-dark-btn {
     width: 35px;
     height: 20px;
     border-radius: 15px;
