@@ -1,17 +1,25 @@
 :root {
   /* Main */
-  --primary-bg: #faedcd;
-  --secondary-color: #d4a373;
-  --tile-bg: #fefae0;
+  --light-primary-bg: #faedcd;
+  --light-secondary-color: #d4a373;
+  --light-tile-bg: #fefae0;
+  --light-left-bg: #e9edc9;
+  --light-right-bg: #e9edc9;
+  --light-hover-color: #606c38;
+  --light-modal-border: #ccc;
+  --light-main-text: #222;
 
-  /* Accents */
-  --left-bg: #e9edc9;
-  --right-bg: #e9edc9;
-  --hover-color: #606c38;
-
-  /* Neutrals */
-  --modal-border: #ccc;
-  --main-text: #222;
+  /* Dark Mode */
+  --dark-primary-bg: #051232;
+  --dark-secondary-color: #2b5c8c;
+  --dark-tile-bg: #01051f;
+  --dark-left-bg: #161236;
+  --dark-right-bg: #161236;
+  --dark-hover-color: #83bca9;
+  --dark-modal-border: #9f93c7;
+  --dark-main-text: #ddd;
+  
+  color-scheme: light dark;
 }
 
 /* HEADER */
@@ -22,7 +30,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: 3fr 1fr 4fr;
-  background: var(--secondary-color);
+  background: var(--light-secondary-color);
   color: white;
   padding: 0.5rem 1rem;
   z-index: 1000;
@@ -44,6 +52,21 @@
   text-align: center;
 }
 
+#light-dark-btn {
+  background-color: var(--light-primary-bg);
+  width: 50px;
+  height: 30px;
+  border-radius: 15px;
+}
+
+#circle-switch {
+  background-color: var(--light-secondary-color);
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  margin: 2px 2px;
+}
+
 /* BASE LAYOUT */
 html,
 body {
@@ -53,7 +76,7 @@ body {
   max-width: 100%;
   overflow: hidden;
   font-family: "Courier New", monospace;
-  background: var(--primary-bg);
+  background: var(--light-primary-bg);
   display: flex;
   flex-direction: column;
   padding-top: 40px;
@@ -86,13 +109,13 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  background: var(--left-bg);
-  border-right: 2px solid var(--modal-border);
+  background: var(--light-left-bg);
+  border-right: 2px solid var(--light-modal-border);
 }
 
 /* MIDDLE COLUMN */
 .middle-col {
-  background: var(--primary-color);
+  background: var(--light-primary-color);
   scroll-behavior: smooth;
   margin: 0 auto;
   width: 55vw;
@@ -101,8 +124,8 @@ body {
 
 /* RIGHT COLUMN */
 .right-col {
-  background: var(--right-bg);
-  border-left: 2px solid var(--modal-border);
+  background: var(--light-right-bg);
+  border-left: 2px solid var(--light-modal-border);
   padding-bottom: 2rem;
 }
 
@@ -110,7 +133,7 @@ body {
 .project-tile,
 .about-tile,
 .shortcuts-tile {
-  background: var(--tile-bg);
+  background: var(--light-tile-bg);
   padding: 1rem;
   border-radius: 10px;
   margin-bottom: 1rem;
@@ -158,11 +181,11 @@ li {
 }
 a {
   text-decoration: none;
-  color: var(--main-text);
+  color: var(--light-main-text);
   transition: color 0.2s, transform 0.2s;
 }
 a:hover {
-  color: var(--hover-color);
+  color: var(--light-hover-color);
 }
 
 /* ABOUT ITEMS */ /* SHORTCUT TILES LI*/
@@ -175,9 +198,9 @@ a:hover {
 }
 .about-item:hover,
 .shortcuts-tile li:hover {
-  background: var(--left-bg);
-  color: var(--hover-color);
-  box-shadow: 0 0 0 6px var(--left-bg);
+  background: var(--light-left-bg);
+  color: var(--light-hover-color);
+  box-shadow: 0 0 0 6px var(--light-left-bg);
 }
 .about-tile h2,
 .shortcuts-tile h2 {
@@ -187,7 +210,7 @@ a:hover {
 .about-tile h2 span {
   font-size: 12px;
   font-weight: normal;
-  color: var(--main-text);
+  color: var(--light-main-text);
   display: block;
 }
 
@@ -207,7 +230,7 @@ a:hover {
 }
 
 .modal-content {
-  background: var(--tile-bg);
+  background: var(--light-tile-bg);
   padding: 1.5rem;
   border-radius: 10px;
   width: 90%;
@@ -229,13 +252,13 @@ a:hover {
   margin: 0.5rem 0;
   padding: 0.5rem;
   border-radius: 6px;
-  border: 1px solid var(--modal-border);
+  border: 1px solid var(--light-modal-border);
   font-family: inherit;
 }
 
 .modal-content button {
   padding: 0.5rem 1rem;
-  background: var(--hover-color);
+  background: var(--light-hover-color);
   color: white;
   border: none;
   border-radius: 6px;
@@ -243,7 +266,7 @@ a:hover {
 }
 
 .modal-content button:hover {
-  background: var(--hover-color);
+  background: var(--light-hover-color);
 }
 
 .close {
@@ -261,8 +284,8 @@ a:hover {
   top: 50%;
   left: 50%;
   transform: translateX(-50%);
-  background: var(--tile-bg);
-  color: var(--main-text);
+  background: var(--light-tile-bg);
+  color: var(--light-main-text);
   padding: 1rem 1.5rem;
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
@@ -276,7 +299,7 @@ a:hover {
   right: 0.5rem;
   cursor: pointer;
   font-size: 1.2rem;
-  color: var(--main-text);
+  color: var(--light-main-text);
 }
 
 /* HAMBURGER */
