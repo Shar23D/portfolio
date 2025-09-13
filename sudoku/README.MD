@@ -16,7 +16,7 @@ A fully interactive web-based Sudoku game — with a twist. This variant include
 - 📱 Fully responsive design
 
 ## 📁 Project Structure
-
+```
 portfolio/
 │
 ├── floating-icon/ # Floating icon that redirects to portfolio site
@@ -29,6 +29,7 @@ portfolio/
     │ ├── helper.js # Grid utilities and validation
     │ ├── style.css # Styling
     └── README.md # You are here!
+```
 ---
 
 ## 🕹️ Controls & Shortcuts

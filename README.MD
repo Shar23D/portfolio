@@ -35,6 +35,7 @@
   ```
 
 ## 📁 Project Structure
+```
 portfolio/
 │
 ├── book-tracker-main/ # Book tracking react app
@@ -54,3 +55,4 @@ portfolio/
 │   └── sudoku-reacy/ # built with npm run build to be added to portfolio site
 ├── index.html # Main HTML file
 └── README.md # You are here!
+```
