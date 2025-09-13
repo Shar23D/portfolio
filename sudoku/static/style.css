@@ -12,8 +12,8 @@
   --main-border: #748873;
   --button: #d3ebe1;
   --text: #183a37;
-  --light-btn: #d9ed92;
-  --light-btn-circle: #fbf8cc;
+  --light-btn: var(--secondary);
+  --light-btn-circle: var(--button);
 
   /* Dark theme */
   --dark-given: #10091f;
@@ -28,8 +28,8 @@
   --dark-main-border: #8b778c;
   --dark-button: #2c141e;
   --dark-text: #e7c5c8;
-  --dark-btn: #362967;
-  --dark-btn-cirle: #040733;
+  --dark-btn: var(--dark-secondary);
+  --dark-btn-cirle: var(--dark-button);
 }
 /* Dark Mode */
 .dark-mode {
