@@ -13,12 +13,18 @@ This app supports multiple difficulty levels, notes mode, keyboard navigation, h
 - ⏱️ **Timer**: Tracks your solving time
 - 📝 **Notes Mode**: Pencil in multiple numbers per cell
 - 🎯 **Smart Hints**: Fix mistakes or fill empty cells
+- ✅ **Highlighting**: 
+  - Same number when selected
+  - Violations (invalid placement)
 - ⌨️ **Keyboard Controls**:
+  - Delete / Backspace (clearing input or notes)
   - Arrow keys for navigation
   - Number keys for input
   - `N` to toggle Notes Mode
   - `H` to use a Hint
-- 🖱️ **Number Pad**: Clickable input support
+- 🖱️ **Number Pad**: 
+  - Clickable input support
+  - Disabled if count reaches 9
 - ✅ **Puzzle Checker**: Instantly check your progress
 - 🔁 **Reset & New Puzzle**: Start fresh anytime
 - 📱 **Responsive Design** (recommended improvements ongoing)
@@ -40,38 +46,51 @@ This app supports multiple difficulty levels, notes mode, keyboard navigation, h
 ```bash
 git clone 
 cd react-sudoku
-2. Install dependencies
-bash
-Copy code
+```
+### 2. Install dependencies
+```bash
 npm install
-3. Start the development server
-bash
-Copy code
+```
+### 3. Start the development server
+```bash
 npm start
-Your app should now be running at http://localhost:
+```
+Your app should now be running at http://localhost:----
 
-🧪 Future Enhancements
-✅ Add dark mode
+## Components
+- Grid (for the board UI)
 
-✅ Improve mobile responsiveness
+- Controls (buttons for actions)
 
-✅ Store best times in localStorage
+- DifficultyModal (for choosing difficulty)
 
-✅ Leaderboard / scoring system
+- NumberPad (alternative input)
 
-✅ Animated victory celebration
+- FloatingIcon (decorative or navigational icon)
 
-✅ Offline puzzle generation
+- Utility functions for validation and puzzle fetching
 
-🤖 API Used
+## 🧪 Future Enhancements
+- Add dark mode
+
+- Improve mobile responsiveness
+
+- Store best times in localStorage
+
+- Leaderboard / scoring system
+
+- Animated victory celebration
+
+- Offline puzzle generation
+
+## 🤖 API Used
 This app fetches puzzles from:
 
 🔗 https://sudoku-api.vercel.app
 
-📁 Folder Structure
-css
-Copy code
-`src/
+## 📁 Folder Structure
+```
+src/
 ├── components/
 │   ├── Controls.js
 │   ├── DifficultyModal.js
@@ -81,10 +100,14 @@ Copy code
 ├── utils/
 │   ├── fetch-puzzle.js
 │   └── validation.js
+├── styles/
+│   └── floating-icon.css
 ├── App.js
 ├── App.css
 └── index.js
-🧠 Tips`
+```
+
+## 🧠 Tips
 Use Hints wisely! They help but are tracked 😉
 
 Try keyboard shortcuts:
@@ -94,9 +117,13 @@ Arrow Keys - Navigate cells
 Number Keys - Fill or Note a number
 Delete/Backspace - Clear cell
 
-👨‍💻 Author
-Your Name
-Portfolio | GitHub
+## 📬 Contact
+
+Have questions or suggestions?
+
+Email: sharon.dang.ncg@gmail.com
+
+GitHub: https://github.com/Shar23D
 
 
 
@@ -163,3 +190,14 @@ Violations (invalid placements)
 ✅ Persistent visual feedback (status with statusType)
 
 ✅ Dynamic count for each number (disabling if count reaches 9)
+
+
+## 📬 Contact
+
+Have questions or suggestions?
+
+Email: sharon.dang.ncg@gmail.com
+
+GitHub: https://github.com/Shar23D
+
+Happy puzzling! 🧩♟️

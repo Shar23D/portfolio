@@ -13,8 +13,8 @@
 
 `npm install tailwindcss @tailwindcss/vite` 
 - Configure the Vite plugin: 
-<i>vite.config.ts</i>
-```
+**vite.config.ts**
+```js
 import { defineConfig } from 'vite'
 import tailwindcss from '@tailwindcss/vite'
 
@@ -25,7 +25,7 @@ export default defineConfig({
 })
 ```
 - Import Tailwind CSS in your css file:
-```
+```css
 @import "tailwindcss";
 ```
 Start your build process
@@ -37,7 +37,7 @@ Start your build process
 
 ### Supabase 
 In Supabase SQL Editor:
-```
+```sql
 -- Enable auth schema
 create extension if not exists "uuid-ossp";
 
@@ -75,3 +75,11 @@ create policy "Users can delete own books"
   on books for delete
   using (auth.uid() = user_id);
 ```
+
+## 📬 Contact
+
+Have questions or suggestions?
+
+Email: sharon.dang.ncg@gmail.com
+
+GitHub: https://github.com/Shar23D

@@ -1,17 +1,17 @@
-🌗 Light/Dark Mode Toggle
+## 🌗 Light/Dark Mode Toggle
 
 This is a responsive and accessible light/dark mode toggle switch UI component. It can be added to any HTML project to allow users to switch between light and dark themes.
 
-📁 Folder Structure
+## 📁 Folder Structure
 ```
-shared/
+portfolio/
 ├── toggle/
 │   ├── toggle.html
 │   ├── toggle.css
 │   └── toggle.js (optional - for theme switching logic)
 ```
 
-📦 Features
+## 📦 Features
 
 Responsive design (mobile-friendly)
 
@@ -21,7 +21,7 @@ Customizable using CSS variables
 
 Pure HTML + CSS (JS can be added for full theme toggling)
 
-🔧 Setup Instructions
+## 🔧 Setup Instructions
 1. Include the HTML
 
 Place the following snippet inside your HTML <body>:
@@ -53,11 +53,9 @@ document.getElementById('light-dark-btn').addEventListener('click', () => {
   document.body.classList.toggle('dark-mode');
 });
 ```
-
-
 You may also persist the theme in localStorage if needed.
 
-🎨 Customization
+## 🎨 Customization
 
 Define your theme colors in a root CSS file:
 
@@ -75,23 +73,23 @@ Define your theme colors in a root CSS file:
 }
 ```
 
-🖼️ Responsive Behavior
+## 🖼️ Responsive Behavior
 
 Default (Desktop):
 
-Toggle size: 60x30px
+- Toggle size: 60x30px
 
-Circle: 25px
+- Circle: 25px
 
 Mobile (< 700px):
 
-Toggle size: 35x20px
+- Toggle size: 35x20px
 
-Circle: 15px
+- Circle: 15px
 
 Adjusted margin-left for circle in dark mode
 
-📌 Notes
+## 📌 Notes
 
 The toggle is purely UI-based unless you add JS for functionality.
 
@@ -99,7 +97,7 @@ The component uses CSS variables for easy theming and reuse.
 
 Ensure z-index is managed properly if other elements are layered over it.
 
-📥 Example Integration
+## 📥 Example Integration
 ```html
 <head>
   <link rel="stylesheet" href="./light-dark-toggle/light-dark.css">
@@ -116,3 +114,10 @@ Ensure z-index is managed properly if other elements are layered over it.
   
 </body>
 ```
+## 📬 Contact
+
+Have questions or suggestions?
+
+Email: sharon.dang.ncg@gmail.com
+
+GitHub: https://github.com/Shar23D

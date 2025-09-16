@@ -142,10 +142,6 @@ Animate errors or hints
 
 Add accessibility features
 
-## 📄 License
-
-© 2025 Sharon Dang
-
 ## 🙌 Acknowledgements
 
 Sudoku solving logic inspired by standard backtracking algorithms

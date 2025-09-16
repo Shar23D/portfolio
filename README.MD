@@ -56,3 +56,11 @@ portfolio/
 ├── index.html # Main HTML file
 └── README.md # You are here!
 ```
+
+## 📬 Contact
+
+Have questions or suggestions?
+
+Email: sharon.dang.ncg@gmail.com
+
+GitHub: https://github.com/Shar23D
