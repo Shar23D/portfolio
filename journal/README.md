@@ -93,12 +93,12 @@ User can click "Write Another Entry" to restart the cycle.
 
 ## 🎯 Targets Explained
 ```
-Name	  Power Range	    Emoji	    Duration	Particle Color	Messages
-Trash	     0–20	         🗑️	        4000ms	      Gray	        3
-Fire	     20–40	         🔥	         4500ms	        Orange	       3
-Tornado	     40–60	         🌪️	        4500ms	   Light Blue	    3
-Sun	         60–80	         ☀️	         5000ms	        Yellow	       3
-Black Hole	 80–100	         🕳️	        6000ms	     Purple	        3
+Name	  Power Range	    Emoji      Duration     Particle Color	    Messages
+Trash	     0–20	         🗑️         4000ms          Gray                3
+Fire	     20–40	         🔥         4500ms          Orange              3
+Tornado	     40–60	         🌪️         4500ms          Light Blue          3
+Sun	         60–80	         ☀️         5000ms          Yellow              3
+Black Hole	 80–100	         🕳️         6000ms          Purple              3
 ```
 
 ## 🧠 Built With
