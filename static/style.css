@@ -35,6 +35,11 @@
   --light-main-text: var(--dark-main-text);
 }
 
+.dark-mode img {
+  filter: brightness(90%);
+
+}
+
 /* HEADER */
 .site-header {
   display: grid;
