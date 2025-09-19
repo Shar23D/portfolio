@@ -472,7 +472,7 @@ function winDisplay() {
   stopTimer();
   setTimeout(() => {
     showLevelPopup();
-  }, 50000);
+  }, 5000);
 }
 
 // Timer & small UI

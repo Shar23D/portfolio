@@ -1,14 +1,14 @@
 /* Variables */
 :root {
-  --given: #eff6e0;
+  --given: #e1e9c9;
   --selected: #fff9bd;
   --hinted: #e7efc7;
   --win: #dee791;
-  --highlight: #dff6aa;
-  --error: #ffcdd2;
+  --highlight: #a3dc9a;
+  --error: #f46472;
   --primary: #fbf8cc;
   --secondary: #ffc18b;
-  --main-bg: #fde4cf;
+  --main-bg: #f5cbcb;
   --main-border: #748873;
   --button: #d3ebe1;
   --text: #183a37;
@@ -132,7 +132,7 @@ p {
   font-weight: bold;
   cursor: pointer;
   user-select: none;
-  color: var(--text)
+  color: var(--text);
 }
 
 .cell.note {
@@ -178,14 +178,12 @@ p {
 
 .error.selected {
   background-color: var(--selected);
-  color: red;
+  color: var(--error);
 }
 
 .cell.win {
   background: var(--win);
-  animation-name: winDisplay;
-  animation-duration: 5s;
-  animation-iteration-count: infinite;
+  animation: flash 2s linear infinite;
 }
 
 /* 3x3 Grid Borders */
@@ -207,7 +205,7 @@ p {
 }
 
 .button {
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--highlight);
   border-radius: 0.5rem;
   padding: 0.75rem 1.5rem;
   font-size: 16px;
@@ -240,7 +238,7 @@ p {
 .number-btn {
   width: 40px;
   height: 40px;
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--highlight);
   border-radius: 0.5rem;
   background: var(--button);
   font-size: 18px;
@@ -254,7 +252,7 @@ p {
   background-color: var(--secondary);
 }
 .number-btn:disabled {
-  color: var(--given);
+  color: var(--error);
   cursor: not-allowed;
 }
 .number-btn.noteOn {
@@ -274,6 +272,22 @@ p {
 .status.win {
   color: green;
   font-size: 24px;
+}
+
+/* Animation */
+@keyframes flash {
+  0% {
+    background-color: var(--win);
+    opacity: 1; 
+  }
+  50% {
+    background-color: var(--highlight);
+    opacity: 0.5; 
+  }
+  100% {
+    background-color: var(--win);
+    opacity: 1;
+  }
 }
 
 /* Popup Overlay */
@@ -338,7 +352,7 @@ p {
 
 .level-btn {
   padding: 1rem;
-  border: 2px solid var(--secondary);
+  border: 2px solid var(--highlight);
   border-radius: 0.5rem;
   background: var(--button);
   font-size: 16px;
@@ -352,26 +366,10 @@ p {
   transform: translateY(-1px);
 }
 
-/* Animations */
-@keyframes winDisplay {
-  0% {
-    background-color: var(--highlight);
-  }
-  25% {
-    background-color: var(--hinted);
-  }
-  50% {
-    background-color: var(--selected);
-  }
-  100% {
-    background-color: var(--win);
-  }
-}
-
 /* Responsive */
 @media (max-width: 780px) {
- main {
-    margin-top: 1rem ;
+  main {
+    margin-top: 1rem;
   }
 }
 @media (max-width: 600px) {

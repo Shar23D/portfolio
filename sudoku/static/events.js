@@ -73,6 +73,7 @@ export function setupEventListeners() {
 
     // arrow navigation
     if (["ArrowLeft", "ArrowRight", "ArrowUp", "ArrowDown"].includes(e.key)) {
+      e.preventDefault();
       const direction = e.key.replace("Arrow", "").toLowerCase();
       moveSelection(direction);
     }
