@@ -30,6 +30,8 @@
   --dark-text: #e7c5c8;
   --dark-btn: var(--dark-secondary);
   --dark-btn-cirle: var(--dark-button);
+
+  color: var(--text);
 }
 /* Dark Mode */
 .dark-mode {
@@ -56,7 +58,7 @@ body {
   margin: 0;
   padding: 20px;
   background-color: var(--primary);
-  color: black;
+  color: var(--text);
 }
 
 main {
@@ -110,7 +112,7 @@ p {
 /* Sudoku Board */
 #board {
   display: grid;
-  width: 458px;
+  width: 458px; /* 9x50px + 8x1px gaps */
   grid-template-columns: repeat(9, 50px);
   grid-template-rows: repeat(9, 50px);
   gap: 1px;
@@ -118,7 +120,6 @@ p {
   border: 3px solid var(--main-border);
   border-radius: 0.5rem;
   margin: 1rem auto;
-  padding: px;
   max-height: 100vh;
 }
 
