@@ -19,6 +19,18 @@ export default class StarField {
       this.stars.push(star);
     }
   }
+  startAnimation(duration) {
+    // Apply the flyingStars animation to all stars
+    this.stars.forEach(star => {
+      star.style.animation = `flyingStars ${duration}ms forwards`;
+    });
+  }
+
+  reset() {
+    this.stars.forEach(star => {
+      star.style.animation = `twinkle 3s infinite`;
+    });
+  }
 
   reset() {}
 }

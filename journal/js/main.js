@@ -11,7 +11,7 @@ class SpaceJournal {
     this.targets = new Targets();
     this.journalPhase = new JournalPhase();
     this.slingshotPhase = new SlingshotPhase(this.targets);
-    this.flightPhase = new FlightPhase();
+    this.flightPhase = new FlightPhase(this.starField);
     this.completionMessage = new CompletionMessage();
 
     this.init();
@@ -43,6 +43,7 @@ class SpaceJournal {
 
   restart() {
     this.completionMessage.hide();
+    this.starField.reset();
     this.flightPhase.reset();
     this.slingshotPhase.reset();
     this.journalPhase.reset();

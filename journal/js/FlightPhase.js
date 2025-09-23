@@ -1,16 +1,19 @@
 export default class FlightPhase {
-  constructor() {
+  constructor(starField) {
     this.elements = {
       flightPhase: document.getElementById("flightPhase"),
       flyingPaper: document.getElementById("flyingPaper"),
       target: document.getElementById("target"),
     };
+    this.starField = starField;
     this.eventListeners = {};
   }
 
   start(target) {
     this.elements.flightPhase.classList.add("active");
     this.elements.target.innerHTML = target.html;
+
+    this.starField.startAnimation(target.flightDuration);
 
     setTimeout(() => {
       this.elements.target.style.animation = `targetApproach ${target.flightDuration}ms ease-out forwards`;
@@ -75,6 +78,7 @@ export default class FlightPhase {
     this.elements.target.classList.remove("visible");
     this.elements.target.style.animation = "";
     this.elements.target.innerHTML = "";
+    this.starField.reset();
   }
 
   on(event, callback) {
