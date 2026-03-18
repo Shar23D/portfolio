@@ -1,8 +1,8 @@
-## 🧭 Floating Icon with Accessible Tooltip
+## Floating Icon with Accessible Tooltip
 
 This reusable component adds a floating circular icon to the bottom-right corner of any webpage. It's typically used for navigation (e.g., linking back to a homepage or portfolio) and includes an accessible tooltip for context.
 
-## 📁 Folder Structure
+## Folder Structure
 ```
 portfolio/
 └── floating-icon/
@@ -10,7 +10,7 @@ portfolio/
     ├── floating-icon.js
     └── floating-icon.jpeg  # Replace with your custom icon
 ```
-## 🚀 Features
+## Features
 
 Floating icon fixed to the bottom-right of the screen
 
@@ -24,7 +24,7 @@ Fully customizable and responsive
 
 Keyboard and screen-reader accessible
 
-## 🔧 Setup Instructions
+## Setup Instructions
 1. Include the CSS
 
 In your HTML <head>, add:
@@ -37,10 +37,10 @@ At the end of your HTML <body>, before the closing tag:
 `<script src="./floating-icon/floating-icon.js"></script>`
 
 **edit the href and src where your icon css and js would be respectively.**
-##### ✅ This script will automatically inject the floating icon and tooltip into the page.
+##### This script will automatically inject the floating icon and tooltip into the page.
 
 
-## 🧩 Behavior & Accessibility
+## Behavior & Accessibility
 
 Position: Bottom-right of the screen, fixed
 
@@ -50,8 +50,8 @@ ARIA support: Tooltip uses aria-describedby and role="tooltip" for screen reader
 
 Keyboard Accessible: Focusable via <a> tag
 
-# 🖼️ Customization
-## 🖼 Icon Image
+# Customization
+## Icon Image
 
 Replace floating-icon.jpeg with your preferred image (50x50px recommended):
 
@@ -62,7 +62,7 @@ Or update the JS:
 
 <img src="path/to/your-icon.png" alt="Custom Alt Text" />
 
-🎯 Tooltip Text
+Tooltip Text
 
 Edit the innerHTML in floating-icon.js:
 
@@ -72,7 +72,7 @@ Edit the innerHTML in floating-icon.js:
 </div>
 ```
 
-## 🎨 Tooltip Styling
+## Tooltip Styling
 
 Modify floating-icon.css:
 
@@ -84,13 +84,13 @@ Modify floating-icon.css:
 }
 ```
 
-## 📥 Example Output
+## Example Output
 
 A small circular icon in the bottom-right corner of the page that expands on hover with a tooltip like:
+ 
+"Explore more projects"
 
-💬 "Explore more projects"
-
-## 🔁 Reuse Instructions
+## Reuse Instructions
 
 Place the floating-icon/ folder in your shared/ directory
 
@@ -98,7 +98,7 @@ Link both the .css and .js files
 
 Ensure your relative paths for href and src in floating-icon.js are correct
 
-## ✅ Accessibility Considerations
+## Accessibility Considerations
 
 The icon is keyboard-navigable (<a> tag)
 
@@ -106,7 +106,7 @@ Tooltip is linked with aria-describedby for screen reader support
 
 Hover/focus states are visually distinct
 
-## 📬 Contact
+## Contact
 
 Have questions or suggestions?
 

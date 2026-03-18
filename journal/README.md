@@ -1,8 +1,8 @@
-## 🚀 Space Journal
+## Space Journal
 
 Space Journal is an interactive journaling experience where users can write their worries, crumple them, and launch them into symbolic cosmic targets — like a black hole or the sun — to let them go. The journey is visual, animated, and message-driven, blending mindfulness with playful design.
 
-## ✨ Features
+## Features
 
 Multi-phase flow:
 
@@ -26,7 +26,7 @@ Multi-phase flow:
 
 - Inspirational/funny messages
 
-## 🗂 Folder Structure
+## Folder Structure
 ```
 space-journal/
 ├── index.html
@@ -45,7 +45,7 @@ space-journal/
     └── floating-icon.jpeg
 ```
 
-## 🔧 Setup
+## Setup
 1. Clone or Copy Files
 
 Ensure you have the entire folder structure intact, especially:
@@ -58,10 +58,10 @@ js/ files with ES module support
 
 Just open index.html in a modern browser.
 
-✅ No build tools or servers required.
+No build tools or servers required.
 
-## 🚦 How It Works
-### 📝 Journal Phase
+## How It Works
+### Journal Phase
 
 User types their feelings into a textarea.
 
@@ -69,7 +69,7 @@ When text is detected, the “Crumple & Launch” button becomes enabled.
 
 On click, the paper crumples and the UI transitions to the next phase.
 
-### 🏹 Slingshot Phase
+### Slingshot Phase
 
 User holds the mouse down on the paper ball to charge power.
 
@@ -77,7 +77,7 @@ The more power, the further the paper flies.
 
 Targets are tied to power ranges (0–100%).
 
-### ✈️ Flight Phase
+### Flight Phase
 
 The paper flies across the screen.
 
@@ -85,13 +85,13 @@ The selected target becomes animated.
 
 An explosion of particles signifies impact.
 
-### 🌌 Completion Message
+### Completion Message
 
 A themed message is randomly selected and shown.
 
 User can click "Write Another Entry" to restart the cycle.
 
-## 🎯 Targets Explained
+## Targets Explained
 ```
 Name	  Power Range	    Emoji      Duration     Particle Color	    Messages
 Trash	     0–20	         🗑️         4000ms          Gray                3
@@ -101,7 +101,7 @@ Sun	         60–80	         ☀️         5000ms          Yellow             
 Black Hole	 80–100	         🕳️         6000ms          Purple              3
 ```
 
-## 🧠 Built With
+## Built With
 
 HTML5: Semantic layout and structure
 
@@ -123,19 +123,19 @@ JavaScript (ES6 Modules):
 
 - StarField: Starry background generator
 
-## 🔁 Reusability & Extensibility
+## Reusability & Extensibility
 
 You can reuse or adapt this experience by:
 
-✍️ Adding more targets to Targets.js
+Adding more targets to Targets.js
 
-🎨 Customizing CSS animations per phase
+Customizing CSS animations per phase
 
-🧩 Replacing the flying paper mechanic with other metaphors (e.g., bottle in the ocean, balloon release)
+Replacing the flying paper mechanic with other metaphors (e.g., bottle in the ocean, balloon release)
+ 
+Integrating persistence (e.g., saving entries locally or remotely)
 
-🔄 Integrating persistence (e.g., saving entries locally or remotely)
-
-## 🧪 Dev Notes
+## Dev Notes
 
 JavaScript events are managed with a basic .on() / .emit() pub/sub pattern.
 
@@ -143,7 +143,7 @@ Flight and particle animations are done using pure CSS, dynamically triggered vi
 
 Tooltips and floating buttons are added dynamically from a shared folder.
 
-## 🧭 Floating Icon Integration
+## Floating Icon Integration
 
 To include the floating icon tooltip (e.g., for returning to homepage):
 
@@ -154,7 +154,7 @@ Include in <head>:
 ```
 Make sure the file paths are correct based on your structure.
 
-## 📬 Contact
+## Contact
 
 Have questions or suggestions?
 

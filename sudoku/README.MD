@@ -2,18 +2,18 @@
 
 A fully interactive web-based Sudoku game — with a twist. This variant includes the **anti-knight constraint**, which forbids placing the same number in any square that is a chess knight's move away. Built with vanilla JavaScript, HTML, and CSS.
 
-## 🚀 Features
+## Features
 
-- ✅ Classic 9x9 Sudoku board
-- ♞ Anti-Knight Constraint: No repeating digits on knight moves (like in chess)
-- ✍️ Note-taking mode
-- 💡 Smart hints system
-- 🔁 Reset and difficulty selection (Easy, Medium, Hard)
-- ⌨️ Full keyboard support (navigation, input, quick actions)
-- 🧠 Solution validator
-- ⏱️ Timer and hint counter
-- 🎨 Light/Dark mode toggle
-- 📱 Fully responsive design
+- Classic 9x9 Sudoku board
+- Anti-Knight Constraint: No repeating digits on knight moves (like in chess)
+- Note-taking mode
+- Smart hints system
+- Reset and difficulty selection (Easy, Medium, Hard)
+- Full keyboard support (navigation, input, quick actions)
+- Solution validator
+- Timer and hint counter
+- Light/Dark mode toggle
+- Fully responsive design
 
 ## 📁 Project Structure
 ```
@@ -32,7 +32,7 @@ portfolio/
 ```
 ---
 
-## 🕹️ Controls & Shortcuts
+## Controls & Shortcuts
 
 | Action           | Input                         |
 | ---------------- | ----------------------------- |
@@ -47,7 +47,7 @@ portfolio/
 
 ---
 
-## 🎮 Game Rules
+## Game Rules
 
 This Sudoku variant includes an **anti-knight rule**:
 
@@ -55,7 +55,7 @@ This Sudoku variant includes an **anti-knight rule**:
 
 ---
 
-## 🛠️ How It Works
+## How It Works
 
 - **Puzzle Generator**: A full Sudoku board is first solved using backtracking.
 - **Puzzle Carving**: Cells are removed one by one while ensuring a unique solution remains.
@@ -65,7 +65,7 @@ This Sudoku variant includes an **anti-knight rule**:
 
 ---
 
-## 🧩 Levels of Difficulty
+## Levels of Difficulty
 
 | Level  | Clue Range |
 | ------ | ---------- |
@@ -75,7 +75,7 @@ This Sudoku variant includes an **anti-knight rule**:
 
 ---
 
-## 🧪 Built With
+## Built With
 
 - **Vanilla JavaScript (ES6 modules)**
 - **HTML5 & CSS3**
@@ -115,7 +115,7 @@ This Sudoku variant includes an **anti-knight rule**:
 
 ---
 
-## 📦 Installation & Usage
+## Installation & Usage
 
 ### Option 1: Open Locally
 
@@ -130,7 +130,7 @@ This Sudoku variant includes an **anti-knight rule**:
 
 - If you have Live Server (e.g. VS Code extension), right-click index.html and click "Open with Live Server".
 
-## 🔧 Customization Ideas
+## Customization Ideas
 
 Add new variants like Anti-King or Diagonal Sudoku
 
@@ -142,7 +142,7 @@ Animate errors or hints
 
 Add accessibility features
 
-## 🙌 Acknowledgements
+## Acknowledgements
 
 Sudoku solving logic inspired by standard backtracking algorithms
 
@@ -150,7 +150,7 @@ Anti-knight rule derived from chess constraints
 
 Vanilla JS - no frameworks!
 
-## 📬 Contact
+## Contact
 
 Have questions or suggestions?
 
@@ -158,4 +158,4 @@ Email: sharon.dang.ncg@gmail.com
 
 GitHub: https://github.com/Shar23D
 
-Happy puzzling! 🧩♟️
+Happy puzzling! 

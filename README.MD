@@ -1,4 +1,4 @@
-## 🧪 Built With
+## Built With
 
 - **Vanilla JavaScript (ES6 modules)**
 - **HTML5 & CSS3**
@@ -34,7 +34,7 @@
   </head>
   ```
 
-## 📁 Project Structure
+## Project Structure
 ```
 portfolio/
 │
@@ -57,7 +57,7 @@ portfolio/
 └── README.md # You are here!
 ```
 
-## 📬 Contact
+## Contact
 
 Have questions or suggestions?
 
